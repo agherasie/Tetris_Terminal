@@ -83,11 +83,19 @@ tetriminos_t *init_tetriminos(char *filepath)
     return tetris;
 }
 
+tetriminos_t **init_tetri()
+{
+    tetriminos_t **tetri = malloc(sizeof(tetriminos_t *) * 7);
+    for (int i = 0; i < 7; i++)
+        tetri[i] = init_tetriminos(my_strcat(my_strcat("tetriminos/", my_itoa(i)), ".tetrimino"));
+    return tetri;
+}
+
 void draw_tetris(vector2_t pos, tetriminos_t *tetris)
 {
     for (int y = 0; tetris->shape[y]; y++)
         for (int x = 0; tetris->shape[x]; x++)
-            mvprintw(y + pos.y + tetris->pos.y, x * 2 + pos.x + tetris->pos.x, &tetris->shape[y][x]);
+            mvprintw(y + pos.y + tetris->pos.y, x + pos.x + tetris->pos.x, &tetris->shape[y][x]);
 }
 
 void init_map(game_t *game)
@@ -115,6 +123,14 @@ void land_tetris(game_t *game, tetriminos_t *tetris)
                 game->map[y + tetris->pos.y][x + tetris->pos.x] = '*';
 }
 
+tetriminos_t *reset_tetris(tetriminos_t **tetri)
+{
+    tetriminos_t *tetris = tetri[range(0, 6)];
+    tetris->pos.x = 0;
+    tetris->pos.y = 0;
+    return tetris;
+}
+
 int main(int ac, char **av)
 {
     for (int i = 1; av[i]; i++)
@@ -122,7 +138,8 @@ int main(int ac, char **av)
             printf("%s\n", read_to_charstar("help.txt"));
             return 0;
         }
-    tetriminos_t *tetris = init_tetriminos("tetriminos/bar.tetrimino");
+    tetriminos_t **tetri = init_tetri();
+    tetriminos_t *tetris = reset_tetris(tetri);
     initscr();
     curs_set(0);
     keypad(stdscr, TRUE);
@@ -147,7 +164,7 @@ int main(int ac, char **av)
             tetris->pos.y++;
         else {
             land_tetris(game, tetris);
-            tetris = init_tetriminos("tetriminos/square.tetrimino");
+            tetris = reset_tetris(tetri);
         }
         erase();
     }

@@ -12,5 +12,6 @@
     #include <ncurses.h>
     #include <sys/stat.h>
     #include <fcntl.h>
+    #include "my.h"
 
 #endif /* TETRIS_H_ */

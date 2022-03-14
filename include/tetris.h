@@ -42,6 +42,7 @@ typedef struct game {
     vector2_t map_size;
     int show_next;
     int debug_mode;
+    char **map;
 } game_t;
 
 #endif /* TETRIS_H_ */

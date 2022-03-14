@@ -90,6 +90,31 @@ void draw_tetris(vector2_t pos, tetriminos_t *tetris)
             mvprintw(y + pos.y + tetris->pos.y, x * 2 + pos.x + tetris->pos.x, &tetris->shape[y][x]);
 }
 
+void init_map(game_t *game)
+{
+    game->map = malloc(sizeof(char *) * game->map_size.y);
+    for (int y = 0; y < game->map_size.y; y++) {
+        game->map[y] = malloc(sizeof(char) * game->map_size.y);
+        for (int x = 0; x < game->map_size.x; x++)
+            game->map[y][x] = 0;
+    }
+}
+
+void draw_map(game_t *game, char **map, vector2_t offset)
+{
+    for (int y = 0; y < game->map_size.y; y++)
+        for (int x = 0; x < game->map_size.x; x++)
+            mvprintw(y + offset.y, x + offset.x, &map[y][x]);
+}
+
+void land_tetris(game_t *game, tetriminos_t *tetris)
+{
+    for (int y = 0; y < tetris->size.y; y++)
+        for (int x = 0; x < tetris->size.x; x++)
+            if (tetris->shape[y][x] == '*')
+                game->map[y + tetris->pos.y][x + tetris->pos.x] = '*';
+}
+
 int main(int ac, char **av)
 {
     for (int i = 1; av[i]; i++)
@@ -103,8 +128,11 @@ int main(int ac, char **av)
     keypad(stdscr, TRUE);
     start_color();
     init_pair(0, COLOR_WHITE, COLOR_BLACK);
+    init_pair(1, COLOR_RED, COLOR_BLACK);
+    init_pair(2, COLOR_CYAN, COLOR_BLACK);
     game_t *game = init_params();
     game->map_size.x *= 2;
+    init_map(game);
     while (1) {
         int offset = COLS / 2 - game->map_size.x;
         refresh();
@@ -113,9 +141,14 @@ int main(int ac, char **av)
         draw_rectangle((vector2_t){10, 4}, (vector2_t){offset + game->map_size.x + 2, 0}, TRUE);
         draw_rectangle((vector2_t){20, 5}, (vector2_t){offset, game->map_size.y + 2}, TRUE);
         draw_tetris((vector2_t){offset + offset / 2, 1}, tetris);
+        draw_map(game, game->map, (vector2_t){offset + offset / 2, 1});
         getch();
         if (tetris->pos.y + tetris->size.y < game->map_size.y - 1)
             tetris->pos.y++;
+        else {
+            land_tetris(game, tetris);
+            tetris = init_tetriminos("tetriminos/square.tetrimino");
+        }
         erase();
     }
     return 0;

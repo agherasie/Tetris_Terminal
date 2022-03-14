@@ -45,4 +45,25 @@ typedef struct game {
     char **map;
 } game_t;
 
+// DRAW
+void draw_rectangle(vector2_t size, vector2_t pos, int corner_type);
+void draw_tetris(vector2_t pos, tetriminos_t *tetris);
+void draw_map(game_t *game, char **map, vector2_t offset);
+
+// TETRI
+void land_tetris(game_t *game, tetriminos_t *tetris);
+tetriminos_t *reset_tetris(tetriminos_t **tetri);
+
+// INIT
+void init_map(game_t *game);
+void init_colors();
+keys_t *init_keys();
+game_t *init_params();
+tetriminos_t **init_tetri();
+tetriminos_t *init_tetriminos(char *filepath);
+void skip_to_line(char **data);
+
+// GAME
+int loop(game_t *game, tetriminos_t *tetris, tetriminos_t **tetri);
+
 #endif /* TETRIS_H_ */

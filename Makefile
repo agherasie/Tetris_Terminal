@@ -19,6 +19,7 @@ all: $(NAME)
 $(NAME):	$(OBJ)
 	make -C lib/
 	gcc -o $(NAME) $(SRC) $(LIB) $(NCURSES) $(CFLAGS)
+	rm -f $(shell find -name '*.o')
 
 clean:
 	rm -f $(OBJ)

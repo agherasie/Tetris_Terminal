@@ -28,6 +28,14 @@ typedef struct keys {
     int p;
 } keys_t;
 
+typedef struct tetriminos {
+    char **shape;
+    int color;
+    int landed;
+    vector2_t pos;
+    vector2_t size;
+} tetriminos_t;
+
 typedef struct game {
     int level;
     keys_t *keys;

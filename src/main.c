@@ -54,6 +54,28 @@ void draw_rectangle(vector2_t size, vector2_t pos, int corner_type)
     }
 }
 
+void handle_h(int ac, char **av, game_t *game)
+{
+    for (int i = 1; i < ac; i++) {
+        if (av[i][0] == '-' && av[i][1] == 'l')
+            game->keys->l = my_getnbr(av[i + 1]);
+        else if (av[i][0] == '-' && av[i][1] == 'r')
+            game->keys->r = my_getnbr(av[i + 1]);
+        else if (av[i][0] == '-' && av[i][1] == 't')
+            game->keys->t = my_getnbr(av[i + 1]);
+        else if (av[i][0] == '-' && av[i][1] == 'd')
+            game->keys->d = my_getnbr(av[i + 1]);
+        else if (av[i][0] == '-' && av[i][1] == 'q')
+            game->keys->q = my_getnbr(av[i + 1]);
+        else if (av[i][0] == '-' && av[i][1] == 'p')
+            game->keys->p = my_getnbr(av[i + 1]);
+        else if (av[i][0] == '-' && av[i][1] == 'w')
+            game->show_next = TRUE;
+        else if (av[i][0] == '-' && av[i][1] == 'D')
+            game->debug_mode = TRUE;
+    }
+}
+
 int main(int ac, char **av)
 {
     for (int i = 1; av[i]; i++)
@@ -67,6 +89,7 @@ int main(int ac, char **av)
     start_color();
     init_pair(0, COLOR_WHITE, COLOR_BLACK);
     game_t *game = init_params();
+    handle_h(ac, av, game);
     while (1) {
         game->map_size.x *= 2;
         int offset = COLS / 2 - game->map_size.x;

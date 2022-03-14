@@ -17,6 +17,7 @@ all: $(NAME)
 $(NAME):	$(OBJ)
 	ar rc $(NAME) $(OBJ)
 	cp my.h ../include/
+	rm -f $(shell find -name '*.o')
 
 clean:
 	rm -f $(OBJ)

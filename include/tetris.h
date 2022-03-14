@@ -30,7 +30,7 @@ typedef struct keys {
 
 typedef struct game {
     int level;
-    keys_t keys;
+    keys_t *keys;
     vector2_t map_size;
     int show_next;
     int debug_mode;

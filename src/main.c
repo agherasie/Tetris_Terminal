@@ -31,6 +31,29 @@ game_t *init_params()
     return game;
 }
 
+void draw_rectangle(vector2_t size, vector2_t pos, int corner_type)
+{
+    if (corner_type == FALSE) {
+        mvprintw(pos.y, pos.x, "+");
+        mvprintw(size.y + pos.y, pos.x, "+");
+        mvprintw(pos.y, size.x + pos.x, "+");
+        mvprintw(size.y + pos.y, size.x + pos.x, "+");
+    } else {
+        mvprintw(pos.y, pos.x, "/");
+        mvprintw(size.y + pos.y, pos.x, "\\");
+        mvprintw(pos.y, size.x + pos.x, "\\");
+        mvprintw(size.y + pos.y, size.x + pos.x, "/");
+    }
+    for (int i = 1; i < size.y; i++) {
+        mvprintw(i + pos.y, pos.x, "|");
+        mvprintw(i + pos.y, size.x + pos.x, "|");
+    }
+    for (int i = 1; i < size.x; i++) {
+        mvprintw(pos.y, i + pos.x, "-");
+        mvprintw(size.y + pos.y, i + pos.x, "-");
+    }
+}
+
 int main(int ac, char **av)
 {
     for (int i = 1; av[i]; i++)
@@ -44,5 +67,16 @@ int main(int ac, char **av)
     start_color();
     init_pair(0, COLOR_WHITE, COLOR_BLACK);
     game_t *game = init_params();
+    while (1) {
+        game->map_size.x *= 2;
+        int offset = COLS / 2 - game->map_size.x;
+        refresh();
+        clear();
+        draw_rectangle(game->map_size, (vector2_t){offset, 0}, FALSE);
+        draw_rectangle((vector2_t){10, 4}, (vector2_t){offset + game->map_size.x + 2, 0}, TRUE);
+        draw_rectangle((vector2_t){20, 5}, (vector2_t){offset, game->map_size.y + 2}, TRUE);
+        getch();
+        erase();
+    }
     return 0;
 }

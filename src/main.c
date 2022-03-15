@@ -10,10 +10,17 @@
 keys_t *init_keys()
 {
     keys_t *keys = malloc(sizeof(keys_t));
-    keys->l = KEY_LEFT;
+    /*keys->l = KEY_LEFT;
     keys->r = KEY_RIGHT;
     keys->t = KEY_UP;
     keys->d = KEY_DOWN;
+    keys->q = 'q';
+    keys->p = ' ';*/
+
+    keys->l = 'q';
+    keys->r = 'd';
+    keys->t = 'z';
+    keys->d = 's';
     keys->q = 'q';
     keys->p = ' ';
     return keys;
@@ -54,32 +61,53 @@ void draw_rectangle(vector2_t size, vector2_t pos, int corner_type)
     }
 }
 
+char *handle_arg(char *arg)
+{
+    char *new_arg = arg;
+    for (; *new_arg != '{'; new_arg++);
+    new_arg++;
+    new_arg[my_strlen(new_arg)] = '\0';
+    return new_arg;
+}
+
+void handle_h2(int ac, char **av, game_t *game, int i)
+{
+    if (av[i][0] == '-' && av[i][1] == 'L')
+        game->level = my_getnbr(handle_arg(av[i + 1]));
+    else if (my_strcmp(av[i], "--map-size") == 0) {
+        game->map_size.y = atoi(av[i + 1]);
+        game->map_size.x = atoi(av[i + 2]);
+    }
+}
+
 void handle_h(int ac, char **av, game_t *game)
 {
-    for (int i = 1; i < ac; i++) {
+    int i = 1;
+    for (; i < ac; i++) {
         if (av[i][0] == '-' && av[i][1] == 'l')
-            game->keys->l = my_getnbr(av[i + 1]);
-        else if (av[i][0] == '-' && av[i][1] == 'r')
-            game->keys->r = my_getnbr(av[i + 1]);
+            game->keys->l = av[i + 1][1];
+        else if(av[i][0] == '-' && av[i][1] == 'r')
+            game->keys->r = av[i + 1][1];
         else if (av[i][0] == '-' && av[i][1] == 't')
-            game->keys->t = my_getnbr(av[i + 1]);
+            game->keys->t = av[i + 1][1];
         else if (av[i][0] == '-' && av[i][1] == 'd')
-            game->keys->d = my_getnbr(av[i + 1]);
+            game->keys->d = av[i + 1][1];
         else if (av[i][0] == '-' && av[i][1] == 'q')
-            game->keys->q = my_getnbr(av[i + 1]);
+            game->keys->q = av[i + 1][1];
         else if (av[i][0] == '-' && av[i][1] == 'p')
-            game->keys->p = my_getnbr(av[i + 1]);
+            game->keys->p = av[i + 1][1];
         else if (av[i][0] == '-' && av[i][1] == 'w')
             game->show_next = TRUE;
         else if (av[i][0] == '-' && av[i][1] == 'D')
             game->debug_mode = TRUE;
+        handle_h2(ac, av, game, i);
     }
 }
 
 int main(int ac, char **av)
 {
     for (int i = 1; av[i]; i++)
-        if (my_strcmp(av[i], "-h") == 0) {
+        if (my_strcmp(av[i], "--help") == 0) {
             printf("%s\n", read_to_charstar("help.txt"));
             return 0;
         }
@@ -90,6 +118,10 @@ int main(int ac, char **av)
     init_pair(0, COLOR_WHITE, COLOR_BLACK);
     game_t *game = init_params();
     handle_h(ac, av, game);
+
+    printf("%d", game->map_size.y);
+    printf("%d", game->map_size.x);
+
     while (1) {
         game->map_size.x *= 2;
         int offset = COLS / 2 - game->map_size.x;

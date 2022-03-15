@@ -20,12 +20,12 @@ typedef struct vector2 {
 } vector2_t;
 
 typedef struct keys {
-    int l;
-    int r;
-    int t;
-    int d;
-    int q;
-    int p;
+    char l;
+    char r;
+    char t;
+    char d;
+    char q;
+    char p;
 } keys_t;
 
 typedef struct game {

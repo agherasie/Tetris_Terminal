@@ -19,6 +19,14 @@ void draw_ui(game_t *g)
     draw_map(g, g->map, (vector2_t){offset, 1});
 }
 
+void rotate(game_t *g)
+{
+    for (int y = 0; y < g->tetris->size.y; y++)
+        for (int x = 0; x < g->tetris->size.x; x++)
+            if (x != g->tetris->size.x - y)
+                g->tetris->shape[y][x] *= 0;
+}
+
 void read_input(game_t *g, int input)
 {
     if (g->keys->l == input && 1 < g->tetris->pos.x)
@@ -26,7 +34,7 @@ void read_input(game_t *g, int input)
     if (g->keys->r == input && g->tetris->pos.x < g->map_size.x - g->tetris->size.x)
         g->tetris->pos.x++;
     if (g->keys->t == input)
-        g->rotate++;
+        rotate(g);
 }
 
 int loop(game_t *g)
@@ -45,6 +53,19 @@ int loop(game_t *g)
     return 0;
 }
 
+char **rotate_shape(tetriminos_t *t)
+{
+    char **transposed = malloc(sizeof(char *) * (t->size.x + 1));
+    for (int y = 0; y < t->size.x; y++) {
+        transposed[y] = malloc(sizeof(char) * (t->size.y + 1));
+        for (int x = 0; x < t->size.y; x++)
+            transposed[y][x] = t->shape[x][y];
+        transposed[y][t->size.y] = '\0';
+    }
+    transposed[t->size.x] = NULL;
+    return transposed;
+}
+
 int main(int ac, char **av)
 {
     for (int i = 1; av[i]; i++)
@@ -60,7 +81,28 @@ int main(int ac, char **av)
     g->map_size.x *= 2;
     g->tetri = init_tetri();
     reset_tetris(g);
-    init_map(g);
-    while (loop(g) == 0);
+    refresh();
+    clear();
+    for (int i = 0; i < 4; i++)
+        for (int y = 0; g->tetri[i]->shape[y]; y++)
+            for (int x = 0; g->tetri[i]->shape[y][x] != '\0'; x++) {
+                if (g->tetri[i]->shape[y][x] == '*')
+                    mvprintw(i * 5 + y, x, "X");
+                else
+                    mvprintw(i * 5 + y, x, "O");
+            }
+    for (int i = 0; i < 4; i++) {
+        g->tetri[i]->shape = rotate_shape(g->tetri[i]);
+        for (int y = 0; g->tetri[i]->shape[y]; y++)
+            for (int x = 0; g->tetri[i]->shape[y][x] != '\0'; x++) {
+                if (g->tetri[i]->shape[y][x] == '*')
+                    mvprintw(i * 5 + y, x + 5, "X");
+                else
+                    mvprintw(i * 5 + y, x + 5, "O");
+            }
+    }
+    getch();
+    // init_map(g);
+    // while (loop(g) == 0);
     return 0;
 }

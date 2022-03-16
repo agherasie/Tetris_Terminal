@@ -74,10 +74,12 @@ tetriminos_t *init_tetriminos(char *filepath)
     for (int y = 0; y < tetris->size.y; y++) {
         skip_to_line(&data);
         tetris->shape[y] = malloc(sizeof(char) * (tetris->size.x + 1));
-        int x;
-        for (x = 0; data[x] != '\n'; x++)
+        int x = 0;
+        for (; data[x] != '\n'; x++)
             tetris->shape[y][x] = data[x];
-        tetris->shape[y][x] = '\0';
+        for (; x < tetris->size.x; x++)
+            tetris->shape[y][x] = ' ';
+        tetris->shape[y][tetris->size.x] = '\0';
     }
     tetris->shape[tetris->size.y] = NULL;
 

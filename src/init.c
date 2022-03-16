@@ -7,13 +7,13 @@
 
 #include "../include/tetris.h"
 
-void init_map(game_t *game)
+void init_map(game_t *g)
 {
-    game->map = malloc(sizeof(char *) * game->map_size.y);
-    for (int y = 0; y < game->map_size.y; y++) {
-        game->map[y] = malloc(sizeof(char) * game->map_size.y);
-        for (int x = 0; x < game->map_size.x; x++)
-            game->map[y][x] = 0;
+    g->map = malloc(sizeof(char *) * g->map_size.y);
+    for (int y = 0; y < g->map_size.y; y++) {
+        g->map[y] = malloc(sizeof(char) * g->map_size.y);
+        for (int x = 0; x < g->map_size.x; x++)
+            g->map[y][x] = ' ';
     }
 }
 
@@ -44,14 +44,23 @@ keys_t *init_keys()
 
 game_t *init_params()
 {
-    game_t *game = malloc(sizeof(game_t));
-    game->debug_mode = FALSE;
-    game->keys = init_keys();
-    game->map_size = (vector2_t) {10, 20};
-    game->level = 1;
-    game->debug_mode = FALSE;
-    game->show_next = FALSE;
-    return game;
+    game_t *g = malloc(sizeof(game_t));
+    g->debug_mode = FALSE;
+    g->keys = init_keys();
+    g->map_size = (vector2_t) {10, 20};
+    g->level = 1;
+    g->debug_mode = FALSE;
+    g->show_next = FALSE;
+    g->rotate = 0;
+    return g;
+}
+
+void skip_to_line(char **data)
+{
+    for (; **data != '\n'; *data += 1)
+        if (**data == '\0')
+            return;
+    *data += 1;
 }
 
 tetriminos_t *init_tetriminos(char *filepath)
@@ -73,4 +82,12 @@ tetriminos_t *init_tetriminos(char *filepath)
     tetris->shape[tetris->size.y] = NULL;
 
     return tetris;
+}
+
+tetriminos_t **init_tetri()
+{
+    tetriminos_t **tetri = malloc(sizeof(tetriminos_t *) * 7);
+    for (int i = 0; i < 7; i++)
+        tetri[i] = init_tetriminos(my_strcat(my_strcat("tetriminos/", my_itoa(i)), ".tetrimino"));
+    return tetri;
 }

@@ -36,26 +36,29 @@ typedef struct tetriminos {
     vector2_t size;
 } tetriminos_t;
 
-typedef struct game {
+typedef struct g {
     int level;
     keys_t *keys;
     vector2_t map_size;
     int show_next;
     int debug_mode;
     char **map;
+    tetriminos_t **tetri;
+    tetriminos_t *tetris;
+    int rotate;
 } game_t;
 
 // DRAW
 void draw_rectangle(vector2_t size, vector2_t pos, int corner_type);
 void draw_tetris(vector2_t pos, tetriminos_t *tetris);
-void draw_map(game_t *game, char **map, vector2_t offset);
+void draw_map(game_t *g, char **map, vector2_t offset);
 
 // TETRI
-void land_tetris(game_t *game, tetriminos_t *tetris);
-tetriminos_t *reset_tetris(tetriminos_t **tetri);
+void land_tetris(game_t *g, tetriminos_t *tetris);
+void reset_tetris(game_t *g);
 
 // INIT
-void init_map(game_t *game);
+void init_map(game_t *g);
 void init_colors();
 keys_t *init_keys();
 game_t *init_params();
@@ -64,6 +67,6 @@ tetriminos_t *init_tetriminos(char *filepath);
 void skip_to_line(char **data);
 
 // GAME
-int loop(game_t *game, tetriminos_t *tetris, tetriminos_t **tetri);
+int loop(game_t *g);
 
 #endif /* TETRIS_H_ */

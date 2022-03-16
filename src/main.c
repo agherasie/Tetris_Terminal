@@ -29,7 +29,7 @@ keys_t *init_keys()
 game_t *init_params()
 {
     game_t *game = malloc(sizeof(game_t));
-    game->debug_mode = FALSE;
+    //game->debug_mode = FALSE;
     game->keys = init_keys();
     game->map_size = (vector2_t) {10, 20};
     game->level = 1;
@@ -75,8 +75,8 @@ void handle_h2(int ac, char **av, game_t *game, int i)
     if (av[i][0] == '-' && av[i][1] == 'L')
         game->level = my_getnbr(handle_arg(av[i + 1]));
     else if (my_strcmp(av[i], "--map-size") == 0) {
-        game->map_size.y = atoi(av[i + 1]);
-        game->map_size.x = atoi(av[i + 2]);
+        game->map_size.y = my_getnbr(av[i + 1]);
+        game->map_size.x = my_getnbr(av[i + 2]);
     }
 }
 
@@ -118,9 +118,6 @@ int main(int ac, char **av)
     init_pair(0, COLOR_WHITE, COLOR_BLACK);
     game_t *game = init_params();
     handle_h(ac, av, game);
-
-    printf("%d", game->map_size.y);
-    printf("%d", game->map_size.x);
 
     while (1) {
         game->map_size.x *= 2;

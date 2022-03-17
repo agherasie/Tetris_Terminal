@@ -11,18 +11,16 @@ int valid_pos(game_t *g, vector2_t vector)
 {
     tetriminos_t *tetris = g->tetris;
     if (tetris->pos.x + vector.x <= 0)
-        return FALSE;
+        return 0;
     if (tetris->pos.x + tetris->size.x + vector.x > g->map_size.x)
-        return FALSE;
-    if (tetris->pos.y + vector.y <= 0)
-        return FALSE;
-    if (tetris->pos.y + tetris->size.y + vector.y > g->map_size.y)
-        return FALSE;
+        return 0;
+    if (tetris->pos.y + tetris->size.y + vector.y > g->map_size.y - 1)
+        return -1;
     for (int y = 0; y < tetris->size.y; y++)
         for (int x = 0; x < tetris->size.x; x++) {
             char *map_pos = &g->map[y + tetris->pos.y + vector.y][x + tetris->pos.x + vector.x];
             if (*map_pos != ' ' && tetris->shape[y][x] != ' ')
-                return FALSE;
+                return -1;
         }
     return TRUE;
 }
@@ -35,10 +33,12 @@ void apply_vector(game_t *g, vector2_t vector)
     }
 }
 
-void try_move(game_t *g, vector2_t vector)
+int try_move(game_t *g, vector2_t vector)
 {
-    if (valid_pos(g, vector) == TRUE)
+    int is_valid = valid_pos(g, vector);
+    if (is_valid == TRUE)
         apply_vector(g, vector);
+    return is_valid;
 }
 
 void read_input(game_t *g)
@@ -66,12 +66,9 @@ int loop(game_t *g)
     draw_ui(g);
     if (g->rotate >= 4)
         g->rotate = 0;
-    int tip = g->tetris->pos.y + g->tetris->size.y;
-    if (tip >= g->map_size.y - 1) {
-        land_tetris(g, g->tetris);
-        reset_tetris(g);
-    } else if (g->time % 10 == 0)
-        try_move(g, (vector2_t){0, 1});
+    if (g->time % 10 == 0)
+        if (try_move(g, (vector2_t){0, 1}) == -1)
+            land_tetris(g, g->tetris);
     read_input(g);
     erase();
     return 0;
@@ -79,6 +76,7 @@ int loop(game_t *g)
 
 int main(int ac, char **av)
 {
+    srand(time(NULL));
     for (int i = 1; av[i]; i++)
         if (my_strcmp(av[i], "-h") == 0) {
             printf("%s\n", read_to_charstar("help.txt"));

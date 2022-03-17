@@ -14,11 +14,13 @@ void land_tetris(game_t *g, tetriminos_t *tetris)
             char *map_pos = &g->map[y + tetris->pos.y][x + tetris->pos.x];
             *map_pos = tetris->shape[y][x] == '*' ? tetris->color : *map_pos;
         }
+    reset_tetris(g);
 }
 
 void reset_tetris(game_t *g)
 {
-    g->tetris = g->tetri[range(0, 6)];
+    g->tetris = g->tetri[g->next];
+    g->next = range(0, 6);
     g->tetris->pos.x = g->map_size.x / 2;
     g->tetris->pos.y = 0;
 }

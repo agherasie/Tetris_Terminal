@@ -47,11 +47,12 @@ typedef struct g {
     tetriminos_t *tetris;
     int rotate;
     int time;
+    int next;
 } game_t;
 
 // DRAW
 void draw_rectangle(vector2_t size, vector2_t pos, int corner_type);
-void draw_tetris(vector2_t pos, tetriminos_t *tetris);
+void draw_tetris(vector2_t pos, tetriminos_t *tetris, int player);
 void draw_map(game_t *g, char **map, vector2_t offset);
 void draw_ui(game_t *g);
 

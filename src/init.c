@@ -53,5 +53,6 @@ game_t *init_params(void)
     g->show_next = FALSE;
     g->rotate = 0;
     g->time = 0;
+    g->next = range(0, 6);
     return g;
 }

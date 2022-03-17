@@ -46,6 +46,7 @@ typedef struct g {
     tetriminos_t **tetri;
     tetriminos_t *tetris;
     int rotate;
+    int time;
 } game_t;
 
 // DRAW

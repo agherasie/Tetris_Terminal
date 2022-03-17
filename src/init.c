@@ -52,5 +52,6 @@ game_t *init_params(void)
     g->debug_mode = FALSE;
     g->show_next = FALSE;
     g->rotate = 0;
+    g->time = 0;
     return g;
 }

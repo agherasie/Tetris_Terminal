@@ -7,31 +7,62 @@
 
 #include "../include/tetris.h"
 
-int valid_pos(game_t *g, int plus)
+int valid_pos(game_t *g, vector2_t vector)
 {
     tetriminos_t *tetris = g->tetris;
+    if (tetris->pos.x + vector.x <= 0)
+        return FALSE;
+    if (tetris->pos.x + tetris->size.x + vector.x > g->map_size.x)
+        return FALSE;
+    if (tetris->pos.y + vector.y <= 0)
+        return FALSE;
+    if (tetris->pos.y + tetris->size.y + vector.y > g->map_size.y)
+        return FALSE;
     for (int y = 0; y < tetris->size.y; y++)
         for (int x = 0; x < tetris->size.x; x++) {
-            char *map_pos = &g->map[y + tetris->pos.y][x + tetris->pos.x];
+            char *map_pos = &g->map[y + tetris->pos.y + vector.y][x + tetris->pos.x + vector.x];
             if (*map_pos != ' ' && tetris->shape[y][x] != ' ')
                 return FALSE;
         }
     return TRUE;
 }
 
-void read_input(game_t *g, int input)
+void apply_vector(game_t *g, vector2_t vector)
 {
+    if (valid_pos(g, vector) == TRUE) {
+        g->tetris->pos.x += vector.x;
+        g->tetris->pos.y += vector.y;
+    }
+}
+
+void try_move(game_t *g, vector2_t vector)
+{
+    if (valid_pos(g, vector) == TRUE)
+        apply_vector(g, vector);
+}
+
+void read_input(game_t *g)
+{
+    cbreak();
+    timeout(50 - g->level);
+    int input = getch();
     tetriminos_t *t = g->tetris;
-    if (g->keys->l == input && 1 < t->pos.x && valid_pos(g, 0) == TRUE)
-        t->pos.x--;
-    if (g->keys->r == input && t->pos.x < g->map_size.x - t->size.x && valid_pos(g, 0) == TRUE)
-        t->pos.x++;
+    vector2_t move_left = {-1, 0};
+    vector2_t move_right = {1, 0};
+    vector2_t move_down = {0, 1};
+    if (g->keys->l == input)
+        try_move(g, move_left);
+    if (g->keys->r == input)
+        try_move(g, move_right);
+    if (g->keys->d == input)
+        try_move(g, move_down);
     if (g->keys->t == input)
         rotate_shape(t);
 }
 
 int loop(game_t *g)
 {
+    g->time++;
     draw_ui(g);
     if (g->rotate >= 4)
         g->rotate = 0;
@@ -39,9 +70,9 @@ int loop(game_t *g)
     if (tip >= g->map_size.y - 1) {
         land_tetris(g, g->tetris);
         reset_tetris(g);
-    } else if (valid_pos(g, 1) == TRUE)
-        g->tetris->pos.y++;
-    read_input(g, getch());
+    } else if (g->time % 10 == 0)
+        try_move(g, (vector2_t){0, 1});
+    read_input(g);
     erase();
     return 0;
 }

@@ -34,7 +34,7 @@ void read_input(game_t *g, int input)
     if (g->keys->r == input && g->tetris->pos.x < g->map_size.x - g->tetris->size.x)
         g->tetris->pos.x++;
     if (g->keys->t == input)
-        rotate(g);
+        rotate_shape(g->tetris);
 }
 
 int loop(game_t *g)
@@ -53,7 +53,7 @@ int loop(game_t *g)
     return 0;
 }
 
-char **rotate_shape(tetriminos_t *t)
+void rotate_shape(tetriminos_t *t)
 {
     char **transposed = malloc(sizeof(char *) * (t->size.x + 1));
     for (int y = 0; y < t->size.x; y++) {
@@ -63,7 +63,16 @@ char **rotate_shape(tetriminos_t *t)
         transposed[y][t->size.y] = '\0';
     }
     transposed[t->size.x] = NULL;
-    return transposed;
+    int temp = t->size.x;
+    t->size.x = t->size.y;
+    t->size.y = temp;
+    char **shape_to_free = t->shape;
+    t->shape = transposed;
+    for (int y = 0; y < t->size.y; y++) {
+        my_revstr(t->shape[y]);
+        free(shape_to_free[y]);
+    }
+    free(shape_to_free);
 }
 
 int main(int ac, char **av)
@@ -83,26 +92,7 @@ int main(int ac, char **av)
     reset_tetris(g);
     refresh();
     clear();
-    for (int i = 0; i < 4; i++)
-        for (int y = 0; g->tetri[i]->shape[y]; y++)
-            for (int x = 0; g->tetri[i]->shape[y][x] != '\0'; x++) {
-                if (g->tetri[i]->shape[y][x] == '*')
-                    mvprintw(i * 5 + y, x, "X");
-                else
-                    mvprintw(i * 5 + y, x, "O");
-            }
-    for (int i = 0; i < 4; i++) {
-        g->tetri[i]->shape = rotate_shape(g->tetri[i]);
-        for (int y = 0; g->tetri[i]->shape[y]; y++)
-            for (int x = 0; g->tetri[i]->shape[y][x] != '\0'; x++) {
-                if (g->tetri[i]->shape[y][x] == '*')
-                    mvprintw(i * 5 + y, x + 5, "X");
-                else
-                    mvprintw(i * 5 + y, x + 5, "O");
-            }
-    }
-    getch();
-    // init_map(g);
-    // while (loop(g) == 0);
+    init_map(g);
+    while (loop(g) == 0);
     return 0;
 }

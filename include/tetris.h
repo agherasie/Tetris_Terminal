@@ -56,6 +56,7 @@ void draw_map(game_t *g, char **map, vector2_t offset);
 // TETRI
 void land_tetris(game_t *g, tetriminos_t *tetris);
 void reset_tetris(game_t *g);
+void rotate_shape(tetriminos_t *t);
 
 // INIT
 void init_map(game_t *g);

@@ -65,7 +65,7 @@ void skip_to_line(char **data)
 
 tetriminos_t *init_tetriminos(char *filepath)
 {
-    tetriminos_t *tetris = malloc(sizeof(tetris));
+    tetriminos_t *tetris = malloc(sizeof(tetriminos_t));
     char *data = read_to_charstar(filepath);
     tetris->size = (vector2_t){data[0] - '0', data[2] - '0'};
     tetris->color = data[4] - '0';
@@ -89,7 +89,8 @@ tetriminos_t *init_tetriminos(char *filepath)
 tetriminos_t **init_tetri()
 {
     tetriminos_t **tetri = malloc(sizeof(tetriminos_t *) * 7);
-    for (int i = 0; i < 7; i++)
+    for (int i = 0; i < 7; i++) {
         tetri[i] = init_tetriminos(my_strcat(my_strcat("tetriminos/", my_itoa(i)), ".tetrimino"));
+    }
     return tetri;
 }

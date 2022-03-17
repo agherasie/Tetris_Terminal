@@ -19,6 +19,7 @@ tetriminos_t *init_tetriminos(char *filepath)
 {
     tetriminos_t *tetris = malloc(sizeof(tetriminos_t));
     char *data = read_to_charstar(filepath);
+    char *data_address = data;
     tetris->size = (vector2_t){data[0] - '0', data[2] - '0'};
     tetris->color = data[4] - '0';
     tetris->landed = FALSE;
@@ -34,7 +35,7 @@ tetriminos_t *init_tetriminos(char *filepath)
         tetris->shape[y][tetris->size.x] = '\0';
     }
     tetris->shape[tetris->size.y] = NULL;
-
+    free(data_address);
     return tetris;
 }
 
@@ -42,9 +43,13 @@ tetriminos_t **init_tetri(void)
 {
     tetriminos_t **tetri = malloc(sizeof(tetriminos_t *) * 7);
     for (int i = 0; i < 7; i++) {
-        char *path = my_strcat("tetriminos/", my_itoa(i));
-        path = my_strcat(path, ".tetrimino");
-        tetri[i] = init_tetriminos(path);
+        char *to_number = my_itoa(i);
+        char *path = my_strcat("tetriminos/", to_number);
+        char *fullpath = my_strcat(path, ".tetrimino");
+        tetri[i] = init_tetriminos(fullpath);
+        free(path);
+        free(fullpath);
+        free(to_number);
     }
     return tetri;
 }

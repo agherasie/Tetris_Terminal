@@ -7,52 +7,32 @@
 
 #include "../include/tetris.h"
 
-void draw_rectangle_corners(vector2_t size, vector2_t pos, int corner_type)
-{
-    if (corner_type == FALSE) {
-        mvprintw(pos.y, pos.x, "+");
-        mvprintw(size.y + pos.y, pos.x, "+");
-        mvprintw(pos.y, size.x + pos.x, "+");
-        mvprintw(size.y + pos.y, size.x + pos.x, "+");
-    } else {
-        mvprintw(pos.y, pos.x, "/");
-        mvprintw(size.y + pos.y, pos.x, "\\");
-        mvprintw(pos.y, size.x + pos.x, "\\");
-        mvprintw(size.y + pos.y, size.x + pos.x, "/");
-    }
-}
-
-void draw_rectangle(vector2_t size, vector2_t pos, int corner_type)
-{
-    draw_rectangle_corners(size, pos, corner_type);
-    for (int i = 1; i < size.y; i++) {
-        mvprintw(i + pos.y, pos.x, "|");
-        mvprintw(i + pos.y, size.x + pos.x, "|");
-    }
-    for (int i = 1; i < size.x; i++) {
-        mvprintw(pos.y, i + pos.x, "-");
-        mvprintw(size.y + pos.y, i + pos.x, "-");
-    }
-}
-
 void draw_tetris(vector2_t pos, tetriminos_t *tetris)
 {
     for (int y = 0; tetris->shape[y]; y++) {
         for (int x = 0; tetris->shape[x]; x++) {
             attron(COLOR_PAIR(tetris->color));
-            mvprintw(y + pos.y + tetris->pos.y, x + pos.x + tetris->pos.x, &tetris->shape[y][x]);
+            char *color = &tetris->shape[y][x];
+            pos.x += x + tetris->pos.x;
+            pos.y += y + tetris->pos.y;
+            mvprintw(pos.y, pos.x, color);
+            pos.x -= x + tetris->pos.x;
+            pos.y -= y + tetris->pos.y;
             attroff(COLOR_PAIR(tetris->color));
         }
     }
 }
 
-void draw_map(game_t *g, char **map, vector2_t offset)
+void draw_ui(game_t *g)
 {
-    for (int y = 0; y < g->map_size.y; y++)
-        for (int x = 0; x < g->map_size.x; x++) {
-            attron(COLOR_PAIR(g->map[y][x]));
-            if (g->map[y][x] != ' ')
-                mvprintw(y + offset.y, x + offset.x, "*");
-            attroff(COLOR_PAIR(g->map[y][x]));
-        }
+    int offset = COLS / 2 - g->map_size.x;
+    refresh();
+    clear();
+    draw_rectangle(g->map_size, (vector2_t){offset, 0}, FALSE);
+    vector2_t draw_pos = {offset + g->map_size.x + 2, 0};
+    vector2_t draw_pos2 = {offset, g->map_size.y + 2};
+    draw_rectangle((vector2_t){10, 4}, draw_pos, TRUE);
+    draw_rectangle((vector2_t){20, 5}, draw_pos2, TRUE);
+    draw_tetris((vector2_t){offset, 1}, g->tetris);
+    draw_map(g, g->map, (vector2_t){offset, 1});
 }

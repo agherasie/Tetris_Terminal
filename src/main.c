@@ -7,34 +7,15 @@
 
 #include "../include/tetris.h"
 
-void draw_ui(game_t *g)
-{
-    int offset = COLS / 2 - g->map_size.x;
-    refresh();
-    clear();
-    draw_rectangle(g->map_size, (vector2_t){offset, 0}, FALSE);
-    draw_rectangle((vector2_t){10, 4}, (vector2_t){offset + g->map_size.x + 2, 0}, TRUE);
-    draw_rectangle((vector2_t){20, 5}, (vector2_t){offset, g->map_size.y + 2}, TRUE);
-    draw_tetris((vector2_t){offset, 1}, g->tetris);
-    draw_map(g, g->map, (vector2_t){offset, 1});
-}
-
-void rotate(game_t *g)
-{
-    for (int y = 0; y < g->tetris->size.y; y++)
-        for (int x = 0; x < g->tetris->size.x; x++)
-            if (x != g->tetris->size.x - y)
-                g->tetris->shape[y][x] *= 0;
-}
-
 void read_input(game_t *g, int input)
 {
-    if (g->keys->l == input && 1 < g->tetris->pos.x)
-        g->tetris->pos.x--;
-    if (g->keys->r == input && g->tetris->pos.x < g->map_size.x - g->tetris->size.x)
-        g->tetris->pos.x++;
+    tetriminos_t *t = g->tetris;
+    if (g->keys->l == input && 1 < t->pos.x)
+        t->pos.x--;
+    if (g->keys->r == input && t->pos.x < g->map_size.x - t->size.x)
+        t->pos.x++;
     if (g->keys->t == input)
-        rotate_shape(g->tetris);
+        rotate_shape(t);
 }
 
 int loop(game_t *g)
@@ -51,28 +32,6 @@ int loop(game_t *g)
         g->tetris->pos.y++;
     erase();
     return 0;
-}
-
-void rotate_shape(tetriminos_t *t)
-{
-    char **transposed = malloc(sizeof(char *) * (t->size.x + 1));
-    for (int y = 0; y < t->size.x; y++) {
-        transposed[y] = malloc(sizeof(char) * (t->size.y + 1));
-        for (int x = 0; x < t->size.y; x++)
-            transposed[y][x] = t->shape[x][y];
-        transposed[y][t->size.y] = '\0';
-    }
-    transposed[t->size.x] = NULL;
-    int temp = t->size.x;
-    t->size.x = t->size.y;
-    t->size.y = temp;
-    char **shape_to_free = t->shape;
-    t->shape = transposed;
-    for (int y = 0; y < t->size.y; y++) {
-        my_revstr(t->shape[y]);
-        free(shape_to_free[y]);
-    }
-    free(shape_to_free);
 }
 
 int main(int ac, char **av)

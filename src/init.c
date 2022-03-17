@@ -17,7 +17,7 @@ void init_map(game_t *g)
     }
 }
 
-void init_colors()
+void init_colors(void)
 {
     start_color();
     init_pair(0, COLOR_WHITE, COLOR_BLACK);
@@ -30,7 +30,7 @@ void init_colors()
     init_pair(7, COLOR_WHITE, COLOR_BLACK);
 }
 
-keys_t *init_keys()
+keys_t *init_keys(void)
 {
     keys_t *keys = malloc(sizeof(keys_t));
     keys->l = KEY_LEFT;
@@ -42,55 +42,15 @@ keys_t *init_keys()
     return keys;
 }
 
-game_t *init_params()
+game_t *init_params(void)
 {
     game_t *g = malloc(sizeof(game_t));
     g->debug_mode = FALSE;
     g->keys = init_keys();
-    g->map_size = (vector2_t) {10, 20};
+    g->map_size = (vector2_t){10, 20};
     g->level = 1;
     g->debug_mode = FALSE;
     g->show_next = FALSE;
     g->rotate = 0;
     return g;
-}
-
-void skip_to_line(char **data)
-{
-    for (; **data != '\n'; *data += 1)
-        if (**data == '\0')
-            return;
-    *data += 1;
-}
-
-tetriminos_t *init_tetriminos(char *filepath)
-{
-    tetriminos_t *tetris = malloc(sizeof(tetriminos_t));
-    char *data = read_to_charstar(filepath);
-    tetris->size = (vector2_t){data[0] - '0', data[2] - '0'};
-    tetris->color = data[4] - '0';
-    tetris->landed = FALSE;
-    tetris->shape = malloc(sizeof(char *) * (tetris->size.y + 1));
-    for (int y = 0; y < tetris->size.y; y++) {
-        skip_to_line(&data);
-        tetris->shape[y] = malloc(sizeof(char) * (tetris->size.x + 1));
-        int x = 0;
-        for (; data[x] != '\n'; x++)
-            tetris->shape[y][x] = data[x];
-        for (; x < tetris->size.x; x++)
-            tetris->shape[y][x] = ' ';
-        tetris->shape[y][tetris->size.x] = '\0';
-    }
-    tetris->shape[tetris->size.y] = NULL;
-
-    return tetris;
-}
-
-tetriminos_t **init_tetri()
-{
-    tetriminos_t **tetri = malloc(sizeof(tetriminos_t *) * 7);
-    for (int i = 0; i < 7; i++) {
-        tetri[i] = init_tetriminos(my_strcat(my_strcat("tetriminos/", my_itoa(i)), ".tetrimino"));
-    }
-    return tetri;
 }

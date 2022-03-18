@@ -24,5 +24,6 @@ char *read_to_charstar(char *path)
     read(f, charstar, len);
     charstar[len] = '\0';
     close(f);
+    free(buffer);
     return charstar;
 }

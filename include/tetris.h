@@ -28,12 +28,26 @@ typedef struct keys {
     int p;
 } keys_t;
 
-typedef struct game {
+typedef struct tetriminos {
+    char **shape;
+    int color;
+    int landed;
+    vector2_t pos;
+    vector2_t size;
+} tetriminos_t;
+
+typedef struct g {
     int level;
     keys_t *keys;
     vector2_t map_size;
     int show_next;
     int debug_mode;
+    char **map;
+    tetriminos_t **tetri;
+    tetriminos_t *tetris;
+    int rotate;
+    int time;
+    int next;
 } game_t;
 
 char *handle_arg(char *arg);
@@ -43,5 +57,28 @@ void handle_h2(int ac, char **av, game_t *game, int i);
 void handle_h3(int ac, char **av, game_t *game, int i);
 void handle_h4(int ac, char **av, game_t *game, int i);
 void handle_h(int ac, char **av, game_t *game);
+// DRAW
+void draw_rectangle(vector2_t size, vector2_t pos, int corner_type);
+void draw_tetris(vector2_t pos, tetriminos_t *tetris, int player);
+void draw_map(game_t *g, char **map, vector2_t offset);
+void draw_ui(game_t *g);
+
+// TETRI
+void land_tetris(game_t *g, tetriminos_t *tetris);
+void reset_tetris(game_t *g);
+void rotate_shape(tetriminos_t *t);
+
+// INIT
+void init_map(game_t *g);
+void init_colors(void);
+keys_t *init_keys(void);
+game_t *init_params(void);
+tetriminos_t **init_tetri(void);
+tetriminos_t *init_tetriminos(char *filepath);
+void skip_to_line(char **data);
+
+// GAME
+int loop(game_t *g);
+
 
 #endif /* TETRIS_H_ */

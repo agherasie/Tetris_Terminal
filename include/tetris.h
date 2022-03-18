@@ -50,6 +50,13 @@ typedef struct g {
     int next;
 } game_t;
 
+char *handle_arg(char *arg);
+char *handle_arg2(char *arg);
+char *handle_arg3(char *arg);
+void handle_h2(int ac, char **av, game_t *game, int i);
+void handle_h3(int ac, char **av, game_t *game, int i);
+void handle_h4(int ac, char **av, game_t *game, int i);
+void handle_h(int ac, char **av, game_t *game);
 // DRAW
 void draw_rectangle(vector2_t size, vector2_t pos, int corner_type);
 void draw_tetris(vector2_t pos, tetriminos_t *tetris, int player);
@@ -72,5 +79,6 @@ void skip_to_line(char **data);
 
 // GAME
 int loop(game_t *g);
+
 
 #endif /* TETRIS_H_ */

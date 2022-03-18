@@ -45,7 +45,6 @@ keys_t *init_keys(void)
 game_t *init_params(void)
 {
     game_t *g = malloc(sizeof(game_t));
-    g->debug_mode = FALSE;
     g->keys = init_keys();
     g->map_size = (vector2_t){10, 20};
     g->level = 1;

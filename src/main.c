@@ -27,13 +27,6 @@ int valid_pos(game_t *g, vector2_t vector)
 
 void apply_vector(game_t *g, vector2_t vector)
 {
-    game_t *game = malloc(sizeof(game_t));
-    game->keys = init_keys();
-    game->map_size = (vector2_t) {10, 20};
-    game->level = 1;
-    game->debug_mode = FALSE;
-    game->show_next = FALSE;
-    return game;
     if (valid_pos(g, vector) == TRUE) {
         g->tetris->pos.x += vector.x;
         g->tetris->pos.y += vector.y;
@@ -92,24 +85,9 @@ int main(int ac, char **av)
     initscr();
     curs_set(0);
     keypad(stdscr, TRUE);
-    start_color();
-    init_pair(0, COLOR_WHITE, COLOR_BLACK);
-    game_t *game = init_params();
-    handle_h(ac, av, game);
-
-    while (1) {
-        game->map_size.x *= 2;
-        int offset = COLS / 2 - game->map_size.x;
-        refresh();
-        clear();
-        draw_rectangle(game->map_size, (vector2_t){offset, 0}, FALSE);
-        draw_rectangle((vector2_t){10, 4}, (vector2_t){offset + game->map_size.x + 2, 0}, TRUE);
-        draw_rectangle((vector2_t){20, 5}, (vector2_t){offset, game->map_size.y + 2}, TRUE);
-        getch();
-        erase();
-    }
-    init_colors();
     game_t *g = init_params();
+    handle_h(ac, av, g);
+    init_colors();
     g->tetri = init_tetri();
     reset_tetris(g);
     refresh();

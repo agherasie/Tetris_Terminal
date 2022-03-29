@@ -44,7 +44,7 @@ int try_move(game_t *g, vector2_t vector)
 void read_input(game_t *g)
 {
     cbreak();
-    timeout(50 - g->level);
+    timeout(40 - g->level * 2);
     int input = getch();
     tetriminos_t *t = g->tetris;
     vector2_t move_left = {-1, 0};
@@ -60,10 +60,40 @@ void read_input(game_t *g)
         rotate_shape(t);
 }
 
+int line_empty(game_t *g, int y)
+{
+    int full_cell = 0;
+    for (int x = 0; x < g->map_size.x; x++)
+        if (g->map[y][x] >= 0 && g->map[y][x] < 10)
+            full_cell++;
+    if (full_cell == g->map_size.x - 1)
+        return TRUE;
+    return FALSE;
+}
+
+int empty_lines(game_t *g)
+{
+    for (int y = 1; y < g->map_size.y; y++)
+        if (line_empty(g, y) == FALSE)
+            return FALSE;
+    return TRUE;
+}
+
+void clear_lines(game_t *g)
+{
+    while (empty_lines(g) == TRUE)
+        for (int y = 0; y < g->map_size.y; y++) {
+            if (line_empty(g, y) == TRUE)
+                for (int x = 0; x < g->map_size.x; x++)
+                    g->map[y][x] = ' ';
+        }
+}
+
 int loop(game_t *g)
 {
     g->time++;
     draw_ui(g);
+    clear_lines(g);
     if (g->rotate >= 4)
         g->rotate = 0;
     if (g->time % 10 == 0)

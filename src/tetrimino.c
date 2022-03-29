@@ -46,3 +46,18 @@ void rotate_shape(tetriminos_t *t)
     }
     free(shape_to_free);
 }
+
+void file_path(char *file)
+{
+    struct stat sb;
+    stat(file, &sb);
+    char *buff = malloc(sizeof(char *) * (sb.st_size));
+    int fd = open(file, O_RDONLY);
+    read(fd, buff, sb.st_size);
+    char **tab = my_str_to_word_array(buff);
+    for (int y = 1; tab[y] != NULL; y++) {
+        for (int x = 0; tab[y][x] != '\0'; x++)
+            my_putchar(tab[y][x]);
+        my_putchar('\n');
+    }
+}

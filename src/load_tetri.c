@@ -47,6 +47,7 @@ tetriminos_t **init_tetri(void)
         char *path = my_strcat("tetriminos/", to_number);
         char *fullpath = my_strcat(path, ".tetrimino");
         tetri[i] = init_tetriminos(fullpath);
+
         free(path);
         free(fullpath);
         free(to_number);

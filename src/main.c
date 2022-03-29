@@ -78,15 +78,19 @@ int main(int ac, char **av)
 {
     srand(time(NULL));
     for (int i = 1; av[i]; i++)
-        if (my_strcmp(av[i], "--help") == 0) {
+        if (my_strcmp(av[i], "--help") == 0 || my_strcmp(av[i], "-h") == 0) {
             printf("%s\n", read_to_charstar("help.txt"));
             return 0;
         }
+    game_t *g = init_params();
+    handle_h(ac, av, g);
+    if (g->debug_mode == 1) {
+        handle_d(g);
+        return 0;
+    }
     initscr();
     curs_set(0);
     keypad(stdscr, TRUE);
-    game_t *g = init_params();
-    handle_h(ac, av, g);
     init_colors();
     g->tetri = init_tetri();
     reset_tetris(g);

@@ -5,6 +5,8 @@
 ** fffffff
 */
 
+#include "../include/my.h"
+
 void my_putchar(char c);
 
 long checks(long *nb)

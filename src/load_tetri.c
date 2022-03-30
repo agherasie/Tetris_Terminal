@@ -39,18 +39,42 @@ tetriminos_t *init_tetriminos(char *filepath)
     return tetris;
 }
 
+int get_file_count(char *path)
+{
+    DIR *folder;
+    struct dirent *file;
+    folder = opendir(path);
+    int count = 0;
+    while ((file = readdir(folder))) {
+        char *filepath = my_strcat(path, file->d_name);
+        if (file_error_detection(filepath) == TRUE)
+            count++;
+        free(filepath);
+    }
+    closedir(folder);
+    return count;
+}
+
 tetriminos_t **init_tetri(void)
 {
-    tetriminos_t **tetri = malloc(sizeof(tetriminos_t *) * 7);
-    for (int i = 0; i < 7; i++) {
-        char *to_number = my_itoa(i);
-        char *path = my_strcat("tetriminos/", to_number);
-        char *fullpath = my_strcat(path, ".tetrimino");
-        tetri[i] = init_tetriminos(fullpath);
-
+    char *src_folder = "tetriminos/";
+    int count = get_file_count(src_folder);
+    tetriminos_t **tetri = malloc(sizeof(tetriminos_t *) * count);
+    DIR *folder;
+    struct dirent *file;
+    folder = opendir(src_folder);
+    int i = 0;
+    while (i < count) {
+        file = readdir(folder);
+        char *path = my_strcat(src_folder, file->d_name);
+        if (file_error_detection(path) == FALSE) {
+            free(path);
+            continue;
+        }
+        tetri[i] = init_tetriminos(path);
         free(path);
-        free(fullpath);
-        free(to_number);
+        i++;
     }
+    closedir(folder);
     return tetri;
 }

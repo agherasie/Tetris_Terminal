@@ -26,7 +26,7 @@ char **my_str_to_word_array(char *str)
 {
     int i = 0;
     int y = 0;
-    char **array = malloc(sizeof(char*) * (nb_words(str) + 1));
+    char **array = malloc(sizeof(char *) * (nb_words(str) + 1));
     while (str[i] != '\0') {
         if (str[i] == '\n')
             i++;

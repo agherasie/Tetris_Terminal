@@ -12,6 +12,7 @@
     #include <ncurses.h>
     #include <sys/stat.h>
     #include <fcntl.h>
+    #include <dirent.h>
     #include "my.h"
 
 typedef struct vector2 {
@@ -50,6 +51,7 @@ typedef struct g {
     int next;
 } game_t;
 
+// PARAMS
 char *handle_arg(char *arg);
 char *handle_arg2(char *arg);
 char *handle_arg3(char *arg);
@@ -70,6 +72,7 @@ char *cpy_word(char *str, int i);
 char **my_str_to_word_array(char *str);
 int nb_words(char const *str);
 int word_len(char const *str, int i);
+
 // DRAW
 void draw_rectangle(vector2_t size, vector2_t pos, int corner_type);
 void draw_tetris(vector2_t pos, tetriminos_t *tetris, int player);
@@ -91,7 +94,14 @@ tetriminos_t **init_tetri(void);
 tetriminos_t *init_tetriminos(char *filepath);
 void skip_to_line(char **data);
 
+// ERROR HANDLING
+int ends_with(char *str, char *ending);
+int is_valid_tetrimino(char *filepath);
+int file_error_detection(char *path);
+
 // GAME
 int loop(game_t *g);
+int try_move(game_t *g, vector2_t vector);
+void read_input(game_t *g);
 
 #endif /* TETRIS_H_ */

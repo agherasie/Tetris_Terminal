@@ -41,7 +41,9 @@ void draw_ui(game_t *g)
     refresh();
     clear();
     mvprintw(0, 0, "%i:%i", g->map_size.x, g->map_size.y);
-    draw_rectangle((vector2_t){g->map_size.x * 2, g->map_size.y}, (vector2_t){offset, 0}, FALSE);
+    vector2_t rectangle_size = {g->map_size.x * 2, g->map_size.y};
+    vector2_t rectangle_pos = {offset, 0};
+    draw_rectangle(rectangle_size, rectangle_pos, FALSE);
     draw_hint(g, offset, g->tetri[g->next]);
     vector2_t draw_pos2 = {offset, g->map_size.y + 2};
     draw_rectangle((vector2_t){20, 5}, draw_pos2, TRUE);

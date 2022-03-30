@@ -17,6 +17,8 @@ int loop(game_t *g)
         if (try_move(g, (vector2_t){0, 1}) == -1)
             land_tetris(g, g->tetris);
     read_input(g);
+    if (valid_pos(g, (vector2_t){0, 0}) != TRUE)
+        return 1;
     erase();
     return 0;
 }

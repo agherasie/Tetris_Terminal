@@ -36,5 +36,8 @@ int main(int ac, char **av)
     clear();
     init_map(g);
     while (loop(g) == 0);
+    refresh();
+    clear();
+    endwin();
     return 0;
 }

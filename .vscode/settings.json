@@ -1,5 +1,7 @@
 {
     "files.associations": {
-        "tetris.h": "c"
+        "tetris.h": "c",
+        "*.tcc": "c",
+        "algorithm": "c"
     }
 }

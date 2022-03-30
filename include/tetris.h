@@ -12,6 +12,7 @@
     #include <ncurses.h>
     #include <sys/stat.h>
     #include <fcntl.h>
+    #include <dirent.h>
     #include "my.h"
 
 typedef struct vector2 {

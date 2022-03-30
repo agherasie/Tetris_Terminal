@@ -80,7 +80,6 @@ void gravity(game_t *g)
                 my_strcpy(g->map[y + 1], g->map[y]);
                 empty_line(g->map[y]);
             }
-
 }
 
 int loop(game_t *g)
@@ -98,7 +97,7 @@ int loop(game_t *g)
         g->score += 100;
     g->score += lines * 10;
     g->lines += lines;
-    g->level = g->lines / 10 + 1;
+    g->level = g->lines / 10;
     gravity(g);
     read_input(g);
     erase();

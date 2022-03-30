@@ -47,7 +47,9 @@ int try_move(game_t *g, vector2_t vector)
 void read_input(game_t *g)
 {
     cbreak();
-    timeout(40 - g->level * 2);
+    if (g->level > 10)
+        g->level = 10;
+    timeout(50 - g->level * 5);
     int input = getch();
     tetriminos_t *t = g->tetris;
     vector2_t move_left = {-1, 0};

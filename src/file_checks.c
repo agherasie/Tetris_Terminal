@@ -22,6 +22,7 @@ int is_valid_tetrimino(char *filepath)
 {
     int is_valid = TRUE;
     char *buffer = read_to_charstar(filepath);
+    char *buffer_address = buffer;
     int line_count = 0;
     for (int i = 0; buffer[i] != '\0'; i++)
         if (buffer[i] == '\n')
@@ -38,6 +39,7 @@ int is_valid_tetrimino(char *filepath)
     for (buffer; *buffer != '\0'; buffer++)
         if (*buffer != '\n' && *buffer != '*' && *buffer != ' ')
             is_valid = FALSE;
+    free(buffer_address);
     return is_valid;
 }
 

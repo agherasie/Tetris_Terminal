@@ -27,11 +27,11 @@ void draw_hint(game_t *g, int offset, tetriminos_t *tetris)
 {
     if (g->show_next == FALSE)
         return;
-    vector2_t draw_size = {10, 4};
+    vector2_t draw_size = {tetris->size.x + 4, tetris->size.y + 2};
     vector2_t draw_pos = {offset + g->map_size.x * 2 + 2, 0};
     draw_rectangle(draw_size, draw_pos, TRUE);
-    draw_pos.x += 2;
-    draw_pos.y += 2;
+    draw_pos.x += 1;
+    draw_pos.y += 1;
     draw_tetris(draw_pos, tetris, FALSE);
 }
 

@@ -49,6 +49,8 @@ typedef struct g {
     int rotate;
     int time;
     int next;
+    int lines;
+    int score;
 } game_t;
 
 // PARAMS

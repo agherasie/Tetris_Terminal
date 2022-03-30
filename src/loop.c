@@ -7,7 +7,7 @@
 
 #include "../include/tetris.h"
 
-int line_full(char *line, int y)
+int line_full(char *line)
 {
     int count = 0;
     for (int i = 0; line[i] != '\0'; i++)
@@ -18,18 +18,45 @@ int line_full(char *line, int y)
     return FALSE;
 }
 
+int line_empty(char *line)
+{
+    int count = 0;
+    int i = 0;
+    for (i; line[i] != '\0'; i++)
+        if (line[i] == ' ')
+            count++;
+    if (count == i)
+        return TRUE;
+    return FALSE;
+}
+
+int line_active(char *line)
+{
+    int count = 0;
+    for (int i = 0; line[i] != '\0'; i++)
+        if (line[i] != ' ')
+            count++;
+    if (count > 0)
+        return TRUE;
+    return FALSE;
+}
+
 void empty_line(char *line)
 {
     for (int i = 0; line[i] != '\0'; i++)
         line[i] = ' ';
 }
 
-void full_lines(game_t *g)
+int full_lines(game_t *g)
 {
+    int lines = 0;
     for (int y = 0; g->map[y]; y++) {
-        if (line_full(g->map[y], y) == TRUE)
+        if (line_full(g->map[y]) == TRUE) {
+            lines++;
             empty_line(g->map[y]);
+        }
     }
+    return lines;
 }
 
 int check_pos(game_t *g)
@@ -45,6 +72,17 @@ int check_pos(game_t *g)
     return 0;
 }
 
+void gravity(game_t *g)
+{
+    for (int y = 0; g->map[y + 1]; y++)
+        if (line_active(g->map[y]) == TRUE)
+            if (line_empty(g->map[y + 1]) == TRUE) {
+                my_strcpy(g->map[y + 1], g->map[y]);
+                empty_line(g->map[y]);
+            }
+
+}
+
 int loop(game_t *g)
 {
     g->time++;
@@ -55,7 +93,13 @@ int loop(game_t *g)
         if (try_move(g, (vector2_t){0, 1}) == -1)
             land_tetris(g, g->tetris);
     }
-    full_lines(g);
+    int lines = full_lines(g);
+    if (lines >= 4)
+        g->score += 100;
+    g->score += lines * 10;
+    g->lines += lines;
+    g->level = g->lines / 10 + 1;
+    gravity(g);
     read_input(g);
     erase();
     return check_pos(g);

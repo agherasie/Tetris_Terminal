@@ -42,6 +42,9 @@ void draw_ui(game_t *g)
     clear();
     mvprintw(0, 0, "%i:%i", g->map_size.x, g->map_size.y);
     mvprintw(1, 0, "%i:%i", g->tetris->size.x, g->tetris->size.y);
+    mvprintw(2, 0, "deleted lines: %i", g->lines);
+    mvprintw(3, 0, "level %i", g->level);
+    mvprintw(4, 0, "score: %i", g->score);
     vector2_t rectangle_size = {g->map_size.x * 2, g->map_size.y};
     vector2_t rectangle_pos = {offset, 0};
     draw_rectangle(rectangle_size, rectangle_pos, FALSE);

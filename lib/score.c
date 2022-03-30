@@ -18,6 +18,8 @@ void get_score(int *hiscore)
         for (i; buff[i] != 'x'; i++);
         buff[i] = '\0';
         *hiscore = my_getnbr(buff);
+        if (buff[0] == '\0')
+            *hiscore = 0;
         close(fp);
     }
     return;

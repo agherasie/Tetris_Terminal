@@ -35,6 +35,12 @@ int main(int ac, char **av)
     refresh();
     clear();
     init_map(g);
+    g->lines = g->level * 10;
     while (loop(g) == 0);
+    refresh();
+    clear();
+    endwin();
+    if (g->score > g->hiscore)
+        set_score(&g->score);
     return 0;
 }

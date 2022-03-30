@@ -53,5 +53,8 @@ game_t *init_params(void)
     g->rotate = 0;
     g->time = 0;
     g->next = range(0, 6);
+    g->lines = 0;
+    g->score = 0;
+    get_score(&g->hiscore);
     return g;
 }

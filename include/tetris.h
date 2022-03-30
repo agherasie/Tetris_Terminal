@@ -49,6 +49,9 @@ typedef struct g {
     int rotate;
     int time;
     int next;
+    int lines;
+    int score;
+    int hiscore;
 } game_t;
 
 // PARAMS
@@ -103,5 +106,6 @@ int file_error_detection(char *path);
 int loop(game_t *g);
 int try_move(game_t *g, vector2_t vector);
 void read_input(game_t *g);
+int valid_pos(game_t *g, vector2_t vector);
 
 #endif /* TETRIS_H_ */

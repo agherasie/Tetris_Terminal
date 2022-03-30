@@ -60,6 +60,7 @@ void handle_h2(int ac, char **av, game_t *game, int i)
 void handle_h(int ac, char **av, game_t *game)
 {
     int i = 1;
+    for (; i < ac; i++) {
     if (av[i][0] == '-' && av[i][1] == 'l')
         game->keys->l = my_getnbr(av[i + 1]);
     if (av[i][0] == '-' && av[i][1] == 'r')
@@ -77,4 +78,5 @@ void handle_h(int ac, char **av, game_t *game)
     if (av[i][0] == '-' && av[i][1] == 'D')
         game->debug_mode = TRUE;
     handle_h2(ac, av, game, i);
+    }
 }

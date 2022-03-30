@@ -25,6 +25,8 @@ void draw_tetris(vector2_t pos, tetriminos_t *tetris, int player)
 
 void draw_hint(game_t *g, int offset, tetriminos_t *tetris)
 {
+    if (g->show_next == FALSE)
+        return;
     vector2_t draw_size = {10, 4};
     vector2_t draw_pos = {offset + g->map_size.x * 2 + 2, 0};
     draw_rectangle(draw_size, draw_pos, TRUE);

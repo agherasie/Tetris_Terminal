@@ -49,7 +49,7 @@ game_t *init_params(void)
     g->map_size = (vector2_t){10, 20};
     g->level = 1;
     g->debug_mode = FALSE;
-    g->show_next = FALSE;
+    g->show_next = TRUE;
     g->rotate = 0;
     g->time = 0;
     g->next = range(0, 6);

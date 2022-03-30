@@ -7,19 +7,22 @@
 
 #include "../include/tetris.h"
 
-void draw_tetris(vector2_t pos, tetriminos_t *tetris, int player)
+void draw_tetris(vector2_t pos, tetriminos_t *tetris, int state)
 {
     vector2_t disp_pos = {pos.x, pos.y};
-    if (player == TRUE) {
+    if (state != 1) {
         disp_pos.x += tetris->pos.x * 2;
         disp_pos.y += tetris->pos.y;
     }
     for (int y = 0; y < tetris->size.y; y++)
         for (int x = 0; x < tetris->size.x; x++) {
-            attron(COLOR_PAIR(tetris->color));
-            char color = tetris->shape[y][x];
-            mvaddch(disp_pos.y + y, disp_pos.x + x * 2, color);
-            attroff(COLOR_PAIR(tetris->color));
+            char color = tetris->color;
+            if (state == 2)
+                color = COLOR_WHITE;
+            attron(COLOR_PAIR(color));
+            char c = tetris->shape[y][x];
+            mvaddch(disp_pos.y + y, disp_pos.x + x * 2, c);
+            attroff(COLOR_PAIR(color));
         }
 }
 
@@ -32,7 +35,17 @@ void draw_hint(game_t *g, int offset, tetriminos_t *tetris)
     draw_rectangle(draw_size, draw_pos, TRUE);
     draw_pos.x += 1;
     draw_pos.y += 1;
-    draw_tetris(draw_pos, tetris, FALSE);
+    draw_tetris(draw_pos, tetris, 1);
+}
+
+void draw_ghost(game_t *g, int offset)
+{
+    if (g->time % 20 > 10)
+        return;
+    int i = 0;
+    while (valid_pos(g, (vector2_t){0, i}) == TRUE)
+        i++;
+    draw_tetris((vector2_t){offset, i}, g->tetris, 2);
 }
 
 void draw_ui(game_t *g)
@@ -51,6 +64,7 @@ void draw_ui(game_t *g)
     draw_hint(g, offset, g->tetri[g->next]);
     vector2_t draw_pos2 = {offset, g->map_size.y + 2};
     draw_rectangle((vector2_t){20, 5}, draw_pos2, TRUE);
-    draw_tetris((vector2_t){offset, 1}, g->tetris, TRUE);
+    draw_ghost(g, offset);
+    draw_tetris((vector2_t){offset, 1}, g->tetris, 0);
     draw_map(g, g->map, (vector2_t){offset, 1});
 }

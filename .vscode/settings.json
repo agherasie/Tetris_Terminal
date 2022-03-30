@@ -2,6 +2,11 @@
     "files.associations": {
         "tetris.h": "c",
         "*.tcc": "c",
-        "algorithm": "c"
+        "algorithm": "c",
+        "deque": "c",
+        "string": "c",
+        "unordered_map": "c",
+        "vector": "c",
+        "system_error": "c"
     }
 }

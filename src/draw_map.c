@@ -10,8 +10,8 @@
 void draw_map_tile(int y, int x, vector2_t offset, game_t *g)
 {
     attron(COLOR_PAIR(g->map[y][x]));
-    if (g->map[y][x] != ' ')
-        mvprintw(y + offset.y, x + x + offset.x, "*");
+    if (g->map[y][x] != EMPTY)
+        mvaddch(y + offset.y, x + x + offset.x, FULL);
     attroff(COLOR_PAIR(g->map[y][x]));
 }
 

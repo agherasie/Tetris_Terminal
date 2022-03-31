@@ -13,7 +13,7 @@ void init_map(game_t *g)
     for (int y = 0; y < g->map_size.y; y++) {
         g->map[y] = malloc(sizeof(char) * g->map_size.y);
         for (int x = 0; x < g->map_size.x; x++)
-            g->map[y][x] = ' ';
+            g->map[y][x] = EMPTY;
     }
 }
 

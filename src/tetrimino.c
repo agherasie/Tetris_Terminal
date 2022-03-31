@@ -12,7 +12,7 @@ void land_tetris(game_t *g, tetriminos_t *tetris)
     for (int y = 0; y < tetris->size.y; y++)
         for (int x = 0; x < tetris->size.x; x++) {
             char *map_pos = &g->map[y + tetris->pos.y][x + tetris->pos.x];
-            *map_pos = tetris->shape[y][x] == '*' ? tetris->color : *map_pos;
+            *map_pos = tetris->shape[y][x] == FULL ? tetris->color : *map_pos;
         }
     reset_tetris(g);
 }

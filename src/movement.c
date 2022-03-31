@@ -22,7 +22,7 @@ int valid_pos(game_t *g, vector2_t vector)
             pos.x = x + tetris->pos.x + vector.x;
             pos.y = y + tetris->pos.y + vector.y;
             char *map_pos = &g->map[pos.y][pos.x];
-            if (*map_pos != ' ' && tetris->shape[y][x] != ' ')
+            if (*map_pos != EMPTY && tetris->shape[y][x] != EMPTY)
                 return -1;
         }
     return TRUE;
@@ -63,4 +63,14 @@ void read_input(game_t *g)
         try_move(g, move_down);
     if (g->keys->t == input)
         rotate_shape(t);
+}
+
+void movement(game_t *g)
+{
+    if (g->rotate >= 4)
+        g->rotate = 0;
+    if (g->time % 10 == 0) {
+        if (try_move(g, (vector2_t){0, 1}) == -1)
+            land_tetris(g, g->tetris);
+    }
 }

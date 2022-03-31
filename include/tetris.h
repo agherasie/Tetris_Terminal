@@ -14,6 +14,8 @@
     #include <fcntl.h>
     #include <dirent.h>
     #include "my.h"
+    #define FULL '#'
+    #define EMPTY ' '
 
 typedef struct vector2 {
     int x;
@@ -102,10 +104,18 @@ int ends_with(char *str, char *ending);
 int is_valid_tetrimino(char *filepath);
 int file_error_detection(char *path);
 
+// LINES
+int line_full(char *line);
+int line_empty(char *line);
+int line_active(char *line);
+void empty_line(char *line);
+int full_lines(game_t *g);
+
 // GAME
 int loop(game_t *g);
 int try_move(game_t *g, vector2_t vector);
 void read_input(game_t *g);
 int valid_pos(game_t *g, vector2_t vector);
+void movement(game_t *g);
 
 #endif /* TETRIS_H_ */

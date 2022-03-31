@@ -26,51 +26,51 @@ void draw_tetris(vector2_t pos, tetriminos_t *tetris, int state)
         }
 }
 
-void draw_hint(game_t *g, int offset, tetriminos_t *tetris)
+void draw_hint(game_t *g, vector2_t offset, tetriminos_t *tetris)
 {
     if (g->show_next == FALSE)
         return;
     vector2_t draw_size = {tetris->size.x + 4, tetris->size.y + 2};
-    vector2_t draw_pos = {offset + g->map_size.x * 2 + 2, 0};
+    vector2_t draw_pos = {offset.x + g->map_size.x * 2 + 5, offset.y};
     draw_rectangle(draw_size, draw_pos, TRUE);
     draw_pos.x += 1;
     draw_pos.y += 1;
     draw_tetris(draw_pos, tetris, 1);
 }
 
-void draw_ghost(game_t *g, int offset)
+void draw_ghost(game_t *g, vector2_t offset)
 {
     if (g->time % 20 > 10)
         return;
     int i = 0;
     while (valid_pos(g, (vector2_t){0, i}) == TRUE)
         i++;
-    draw_tetris((vector2_t){offset, i}, g->tetris, 2);
+    draw_tetris((vector2_t){offset.x, i + offset.y - 1}, g->tetris, 2);
 }
 
-void draw_status(game_t *g)
+void draw_status(game_t *g, vector2_t off)
 {
-    vector2_t draw_pos = {0, 0};
-    draw_rectangle((vector2_t){20, 10}, draw_pos, TRUE);
-    mvprintw(1, 1, "map size %i:%i", g->map_size.x, g->map_size.y);
-    mvprintw(2, 1, "tetrimino size %i:%i", g->tetris->size.x, g->tetris->size.y);
-    mvprintw(5, 1, "level %i", g->level);
-    mvprintw(6, 1, "score %i", g->score);
-    mvprintw(7, 1, "hiscore %i", g->hiscore);
-    mvprintw(8, 1, "time %i", g->time / 30);
+    off.x -= 25;
+    draw_rectangle((vector2_t){20, 10}, off, TRUE);
+    mvprintw(off.y + 2, off.x + 1, "map size %i:%i", g->map_size.x, g->map_size.y);
+    mvprintw(off.y + 3, off.x + 1, "tetrimino size %i:%i", g->tetris->size.x, g->tetris->size.y);
+    mvprintw(off.y + 5, off.x + 1, "level %i", g->level);
+    mvprintw(off.y + 6, off.x + 1, "score %i", g->score);
+    mvprintw(off.y + 7, off.x + 1, "hiscore %i", g->hiscore);
+    mvprintw(off.y + 8, off.x + 1, "time %i", g->time / 30);
 }
 
 void draw_ui(game_t *g)
 {
-    int offset = COLS / 2 - g->map_size.x;
     refresh();
     clear();
     vector2_t rectangle_size = {g->map_size.x * 2, g->map_size.y};
-    vector2_t rectangle_pos = {offset, 0};
+    vector2_t rectangle_pos = {COLS / 2 - g->map_size.x / 2, LINES / 2 - g->map_size.y / 2};
     draw_rectangle(rectangle_size, rectangle_pos, FALSE);
-    draw_hint(g, offset, g->tetri[g->next]);
-    draw_status(g);
-    draw_ghost(g, offset);
-    draw_tetris((vector2_t){offset, 1}, g->tetris, 0);
-    draw_map(g, g->map, (vector2_t){offset, 1});
+    rectangle_pos.y += 1;
+    draw_hint(g, rectangle_pos, g->tetri[g->next]);
+    draw_status(g, rectangle_pos);
+    draw_ghost(g, rectangle_pos);
+    draw_tetris(rectangle_pos, g->tetris, 0);
+    draw_map(g, g->map, rectangle_pos);
 }

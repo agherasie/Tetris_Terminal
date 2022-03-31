@@ -31,7 +31,7 @@ int valid_checks(int line_count, char *buffer)
         is_valid = FALSE;
     buffer++;
     for (buffer; *buffer != '\0'; buffer++)
-        if (*buffer != '\n' && *buffer != '*' && *buffer != ' ')
+        if (*buffer != '\n' && *buffer != '*' && *buffer != EMPTY)
             is_valid = FALSE;
     return is_valid;
 }

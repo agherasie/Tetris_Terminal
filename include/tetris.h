@@ -14,6 +14,8 @@
     #include <fcntl.h>
     #include <dirent.h>
     #include "my.h"
+    #define OCCUPIED '#'
+    #define EMPTY ' '
 
 typedef struct vector2 {
     int x;

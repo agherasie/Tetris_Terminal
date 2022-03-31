@@ -11,7 +11,7 @@ int line_full(char *line)
 {
     int count = 0;
     for (int i = 0; line[i] != '\0'; i++)
-        if (line[i] == ' ')
+        if (line[i] == EMPTY)
             count++;
     if (count == 1)
         return TRUE;
@@ -23,7 +23,7 @@ int line_empty(char *line)
     int count = 0;
     int i = 0;
     for (i; line[i] != '\0'; i++)
-        if (line[i] == ' ')
+        if (line[i] == EMPTY)
             count++;
     if (count == i)
         return TRUE;
@@ -34,7 +34,7 @@ int line_active(char *line)
 {
     int count = 0;
     for (int i = 0; line[i] != '\0'; i++)
-        if (line[i] != ' ')
+        if (line[i] != EMPTY)
             count++;
     if (count > 0)
         return TRUE;
@@ -44,7 +44,7 @@ int line_active(char *line)
 void empty_line(char *line)
 {
     for (int i = 0; line[i] != '\0'; i++)
-        line[i] = ' ';
+        line[i] = EMPTY;
 }
 
 int full_lines(game_t *g)
@@ -84,6 +84,12 @@ void gravity(game_t *g)
 
 int loop(game_t *g)
 {
+    if (COLS < g->map_size.x + 55 || LINES < g->map_size.y + 5) {
+        mvprintw(0, 0, "PLEASE RESIZE YOUR TERMINAL (%i:%i)", g->map_size.x, g->map_size.y);
+        getch();
+        erase();
+        return 0;
+    }
     g->time++;
     draw_ui(g);
     if (g->rotate >= 4)

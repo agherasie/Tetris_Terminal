@@ -22,7 +22,7 @@ int valid_pos(game_t *g, vector2_t vector)
             pos.x = x + tetris->pos.x + vector.x;
             pos.y = y + tetris->pos.y + vector.y;
             char *map_pos = &g->map[pos.y][pos.x];
-            if (*map_pos != ' ' && tetris->shape[y][x] != ' ')
+            if (*map_pos != EMPTY && tetris->shape[y][x] != EMPTY)
                 return -1;
         }
     return TRUE;

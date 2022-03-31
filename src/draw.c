@@ -16,7 +16,7 @@ void draw_tetris(vector2_t pos, tetriminos_t *tetris, int state)
     }
     for (int y = 0; y < tetris->size.y; y++)
         for (int x = 0; x < tetris->size.x; x++) {
-            char color = state != 2 ? tetris->color : COLOR_WHITE;
+            char color = state != 2 ? tetris->color : 7;
             attron(COLOR_PAIR(color));
             char c = tetris->shape[y][x];
             mvaddch(disp_pos.y + y, disp_pos.x + x * 2, c);
@@ -29,7 +29,10 @@ void draw_hint(game_t *g, vector2_t offset, tetriminos_t *tetris)
     if (g->show_next == FALSE)
         return;
     vector2_t draw_size = {tetris->size.x + 4, tetris->size.y + 2};
-    vector2_t draw_pos = {offset.x + g->map_size.x * 2 + 5, offset.y};
+    offset.y += 8;
+    offset.x += g->map_size.x * 2 + 4;
+    mvprintw(offset.y - 1, offset.x, "NEXT");
+    vector2_t draw_pos = {offset.x, offset.y};
     draw_rectangle(draw_size, draw_pos, TRUE);
     draw_pos.x += 1;
     draw_pos.y += 1;
@@ -66,9 +69,16 @@ void draw_ui(game_t *g)
     off.y = LINES / 2 - g->map_size.y / 2;
     draw_rectangle(size, off, FALSE);
     off.y += 1;
-    draw_hint(g, off, g->tetri[g->next]);
-    draw_status(g, off);
+    // draw_status(g, off);
     draw_ghost(g, off);
     draw_tetris(off, g->tetris, 0);
     draw_map(g, g->map, off);
+    mvprintw(off.y - 2, off.x + g->map_size.x / 2 + 2, "LINES %i", g->lines - 10);
+    mvprintw(off.y + 2, off.x + g->map_size.x * 2 + 4, "TOP");
+    mvprintw(off.y + 3, off.x + g->map_size.x * 2 + 4, "%.7i", g->hiscore);
+    mvprintw(off.y + 4, off.x + g->map_size.x * 2 + 4, "SCORE");
+    mvprintw(off.y + 5, off.x + g->map_size.x * 2 + 4, "%.7i", g->score);
+    draw_hint(g, off, g->tetri[g->next]);
+    mvprintw(off.y + 16, off.x + g->map_size.x * 2 + 4, "LEVEL");
+    mvprintw(off.y + 17, off.x + g->map_size.x * 2 + 4, "% 5i", g->level);
 }

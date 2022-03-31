@@ -19,7 +19,8 @@ void land_tetris(game_t *g, tetriminos_t *tetris)
 
 void reset_tetris(game_t *g)
 {
-    g->tetris = g->tetri[g->next];
+    g->current = g->next;
+    g->tetris = g->tetri[g->current];
     g->next = range(0, 6);
     g->tetris->pos.x = g->map_size.x / 2;
     g->tetris->pos.y = 0;

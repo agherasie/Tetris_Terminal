@@ -54,6 +54,8 @@ typedef struct g {
     int lines;
     int score;
     int hiscore;
+    int reserve;
+    int current;
 } game_t;
 
 // PARAMS

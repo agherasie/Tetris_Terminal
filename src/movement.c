@@ -44,6 +44,14 @@ int try_move(game_t *g, vector2_t vector)
     return is_valid;
 }
 
+void reserve_shape(game_t *g)
+{
+    if (g->reserve != -1)
+        g->next = g->reserve;
+    g->reserve = g->current;
+    reset_tetris(g);
+}
+
 void read_input(game_t *g)
 {
     cbreak();
@@ -63,6 +71,8 @@ void read_input(game_t *g)
         try_move(g, move_down);
     if (g->keys->t == input)
         rotate_shape(t);
+    if (input == 'r' && g->show_next == TRUE)
+        reserve_shape(g);
 }
 
 void movement(game_t *g)

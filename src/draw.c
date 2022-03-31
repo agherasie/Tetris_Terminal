@@ -16,9 +16,7 @@ void draw_tetris(vector2_t pos, tetriminos_t *tetris, int state)
     }
     for (int y = 0; y < tetris->size.y; y++)
         for (int x = 0; x < tetris->size.x; x++) {
-            char color = tetris->color;
-            if (state == 2)
-                color = COLOR_WHITE;
+            char color = state != 2 ? tetris->color : COLOR_WHITE;
             attron(COLOR_PAIR(color));
             char c = tetris->shape[y][x];
             mvaddch(disp_pos.y + y, disp_pos.x + x * 2, c);
@@ -52,25 +50,25 @@ void draw_status(game_t *g, vector2_t off)
 {
     off.x -= 25;
     draw_rectangle((vector2_t){20, 10}, off, TRUE);
-    mvprintw(off.y + 2, off.x + 1, "map size %i:%i", g->map_size.x, g->map_size.y);
-    mvprintw(off.y + 3, off.x + 1, "tetrimino size %i:%i", g->tetris->size.x, g->tetris->size.y);
-    mvprintw(off.y + 5, off.x + 1, "level %i", g->level);
-    mvprintw(off.y + 6, off.x + 1, "score %i", g->score);
-    mvprintw(off.y + 7, off.x + 1, "hiscore %i", g->hiscore);
-    mvprintw(off.y + 8, off.x + 1, "time %i", g->time / 30);
+    mvprintw(off.y + 3, off.x + 3, "level %i", g->level);
+    mvprintw(off.y + 4, off.x + 3, "score %i", g->score);
+    mvprintw(off.y + 5, off.x + 3, "hiscore %i", g->hiscore);
+    mvprintw(off.y + 6, off.x + 3, "time %i", g->time / 30);
 }
 
 void draw_ui(game_t *g)
 {
     refresh();
     clear();
-    vector2_t rectangle_size = {g->map_size.x * 2, g->map_size.y};
-    vector2_t rectangle_pos = {COLS / 2 - g->map_size.x / 2, LINES / 2 - g->map_size.y / 2};
-    draw_rectangle(rectangle_size, rectangle_pos, FALSE);
-    rectangle_pos.y += 1;
-    draw_hint(g, rectangle_pos, g->tetri[g->next]);
-    draw_status(g, rectangle_pos);
-    draw_ghost(g, rectangle_pos);
-    draw_tetris(rectangle_pos, g->tetris, 0);
-    draw_map(g, g->map, rectangle_pos);
+    vector2_t size = {g->map_size.x * 2, g->map_size.y};
+    vector2_t off;
+    off.x = COLS / 2 - g->map_size.x / 2;
+    off.y = LINES / 2 - g->map_size.y / 2;
+    draw_rectangle(size, off, FALSE);
+    off.y += 1;
+    draw_hint(g, off, g->tetri[g->next]);
+    draw_status(g, off);
+    draw_ghost(g, off);
+    draw_tetris(off, g->tetris, 0);
+    draw_map(g, g->map, off);
 }

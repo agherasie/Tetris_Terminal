@@ -64,3 +64,13 @@ void read_input(game_t *g)
     if (g->keys->t == input)
         rotate_shape(t);
 }
+
+void movement(game_t *g)
+{
+    if (g->rotate >= 4)
+        g->rotate = 0;
+    if (g->time % 10 == 0) {
+        if (try_move(g, (vector2_t){0, 1}) == -1)
+            land_tetris(g, g->tetris);
+    }
+}

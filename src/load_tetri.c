@@ -29,7 +29,7 @@ tetriminos_t *init_tetriminos(char *filepath)
         tetris->shape[y] = malloc(sizeof(char) * (tetris->size.x + 1));
         int x = 0;
         for (; data[x] != '\n'; x++)
-            tetris->shape[y][x] = data[x] == '*' ? OCCUPIED : EMPTY;
+            tetris->shape[y][x] = data[x] == '*' ? FULL : EMPTY;
         for (; x < tetris->size.x; x++)
             tetris->shape[y][x] = EMPTY;
         tetris->shape[y][tetris->size.x] = '\0';

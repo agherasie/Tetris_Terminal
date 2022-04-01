@@ -37,6 +37,7 @@ typedef struct tetriminos {
     int landed;
     vector2_t pos;
     vector2_t size;
+    int amount;
 } tetriminos_t;
 
 typedef struct g {

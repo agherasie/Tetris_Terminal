@@ -23,6 +23,7 @@ tetriminos_t *init_tetriminos(char *filepath)
     tetris->size = (vector2_t){data[0] - '0', data[2] - '0'};
     tetris->color = data[4] - '0';
     tetris->landed = FALSE;
+    tetris->amount = 0;
     tetris->shape = malloc(sizeof(char *) * (tetris->size.y + 1));
     for (int y = 0; y < tetris->size.y; y++) {
         skip_to_line(&data);
@@ -59,12 +60,12 @@ tetriminos_t **init_tetri(void)
 {
     char *src_folder = "tetriminos/";
     int count = get_file_count(src_folder);
-    tetriminos_t **tetri = malloc(sizeof(tetriminos_t *) * count);
+    tetriminos_t **tetri = malloc(sizeof(tetriminos_t *) * (count + 1));
     DIR *folder;
     struct dirent *file;
     folder = opendir(src_folder);
     int i = 0;
-    while (i < count) {
+    while (i < count - 1) {
         file = readdir(folder);
         char *path = my_strcat(src_folder, file->d_name);
         if (file_error_detection(path) == FALSE) {
@@ -75,6 +76,7 @@ tetriminos_t **init_tetri(void)
         free(path);
         i++;
     }
+    tetri[count] = NULL;
     closedir(folder);
     return tetri;
 }

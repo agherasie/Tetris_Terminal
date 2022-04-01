@@ -15,6 +15,7 @@ void land_tetris(game_t *g, tetriminos_t *tetris)
             *map_pos = tetris->shape[y][x] == FULL ? tetris->color : *map_pos;
         }
     reset_tetris(g);
+    tetris->amount += 1;
 }
 
 void reset_tetris(game_t *g)

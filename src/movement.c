@@ -57,7 +57,7 @@ void read_input(game_t *g)
     cbreak();
     if (g->level > 10)
         g->level = 10;
-    timeout(50 - g->level * 5);
+    timeout(30);
     int input = getch();
     tetriminos_t *t = g->tetris;
     vector2_t move_left = {-1, 0};
@@ -79,7 +79,7 @@ void movement(game_t *g)
 {
     if (g->rotate >= 4)
         g->rotate = 0;
-    if (g->time % 10 == 0) {
+    if (g->time % (11 - g->level) == 0) {
         if (try_move(g, (vector2_t){0, 1}) == -1)
             land_tetris(g, g->tetris);
     }

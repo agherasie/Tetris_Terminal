@@ -70,4 +70,11 @@ void draw_ui(game_t *g)
     draw_hint(g, off, g->tetri[g->next]);
     mvprintw(off.y + 16, off.x + g->map_size.x * 2 + 4, "LEVEL");
     mvprintw(off.y + 17, off.x + g->map_size.x * 2 + 4, "% 5i", g->level);
+    mvprintw(off.y, 3, "STATISTICS");
+    int y_offset = 2;
+    for (int i = 0; i < 6; i++) {
+        draw_tetris((vector2_t){0, y_offset + i + off.y}, g->tetri[i], 1);
+        mvprintw(y_offset + i + off.y, 5, "%.3i", g->tetri[i]->amount);
+        y_offset += g->tetri[i]->size.y;
+    }
 }

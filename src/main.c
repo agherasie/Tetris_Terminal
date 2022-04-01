@@ -32,19 +32,36 @@ game_t *init_game(int ac, char **av)
     if (help(av) == 0)
         return NULL;
     game_t *g = init_params();
-    handle_h(ac, av, g);
+    // handle_h(ac, av, g);
     if (g->debug_mode == 1) {
         handle_d(g);
         return NULL;
     }
     ncurses_init();
-    g->tetri = init_tetri();
-    reset_tetris(g);
+    g->tetri = init_tetri(g);
     refresh();
     clear();
     init_map(g);
+    swap_tetris(g);
+    g->tetris->pos.x += g->map_size.x / 2 - g->tetris->size.x / 2;
     g->lines = g->level * 10;
     return g;
+}
+
+void free_all(game_t *g)
+{
+    for (int i = 0; g->map[i]; i++)
+        free(g->map[i]);
+    free(g->map);
+    for (int i = 0; i < g->tetri_count - 1; i++) {
+        for (int j = 0; j < g->tetri[i]->size.y; j++)
+            free(g->tetri[i]->shape[j]);
+        free(g->tetri[i]->shape);
+        free(g->tetri[i]);
+    }
+    free(g->tetri);
+    free(g->keys);
+    free(g);
 }
 
 int main(int ac, char **av)
@@ -58,5 +75,6 @@ int main(int ac, char **av)
     endwin();
     if (g->score > g->hiscore)
         set_score(&g->score);
+    free_all(g);
     return 0;
 }

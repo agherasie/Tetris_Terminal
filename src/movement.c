@@ -10,17 +10,19 @@
 int valid_pos(game_t *g, vector2_t vector)
 {
     tetriminos_t *tetris = g->tetris;
-    if (tetris->pos.x + vector.x <= 0)
+    if (tetris->pos.x + vector.x < 0)
         return 0;
     if (tetris->pos.x + tetris->size.x + vector.x > g->map_size.x)
         return 0;
-    if (tetris->pos.y + tetris->size.y + vector.y > g->map_size.y - 1)
+    if (tetris->pos.y + tetris->size.y + vector.y > g->map_size.y)
         return -1;
     for (int y = 0; y < tetris->size.y; y++)
         for (int x = 0; x < tetris->size.x; x++) {
             vector2_t pos;
             pos.x = x + tetris->pos.x + vector.x;
             pos.y = y + tetris->pos.y + vector.y;
+            if (pos.x >= g->map_size.x || pos.y >= g->map_size.y)
+                return 0;
             char *map_pos = &g->map[pos.y][pos.x];
             if (*map_pos != EMPTY && tetris->shape[y][x] != EMPTY)
                 return -1;

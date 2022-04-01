@@ -49,19 +49,8 @@ void draw_ghost(game_t *g, vector2_t offset)
     draw_tetris((vector2_t){offset.x, i + offset.y - 1}, g->tetris, 2);
 }
 
-void draw_ui(game_t *g)
+void draw_stats(game_t *g, vector2_t off)
 {
-    refresh();
-    clear();
-    vector2_t size = {g->map_size.x * 2, g->map_size.y};
-    vector2_t off;
-    off.x = COLS / 2 - g->map_size.x / 2;
-    off.y = LINES / 2 - g->map_size.y / 2;
-    draw_rectangle(size, off, FALSE);
-    off.y += 1;
-    draw_ghost(g, off);
-    draw_tetris(off, g->tetris, 0);
-    draw_map(g, g->map, off);
     mvprintw(off.y - 2, off.x + g->map_size.x / 2 + 2, "LINES %i", g->lines - 10);
     mvprintw(off.y + 2, off.x + g->map_size.x * 2 + 4, "TOP");
     mvprintw(off.y + 3, off.x + g->map_size.x * 2 + 4, "%.7i", g->hiscore);
@@ -72,9 +61,26 @@ void draw_ui(game_t *g)
     mvprintw(off.y + 17, off.x + g->map_size.x * 2 + 4, "% 5i", g->level);
     mvprintw(off.y, 3, "STATISTICS");
     int y_offset = 2;
-    for (int i = 0; i < 6; i++) {
+    for (int i = 0; i < g->tetri_count - 1; i++) {
         draw_tetris((vector2_t){0, y_offset + i + off.y}, g->tetri[i], 1);
         mvprintw(y_offset + i + off.y, 5, "%.3i", g->tetri[i]->amount);
         y_offset += g->tetri[i]->size.y;
     }
+}
+
+void draw_ui(game_t *g)
+{
+    refresh();
+    clear();
+    vector2_t size = {g->map_size.x * 2, g->map_size.y + 1};
+    vector2_t off;
+    off.x = COLS / 2 - g->map_size.x / 2;
+    off.y = LINES / 2 - g->map_size.y / 2;
+    draw_rectangle(size, off, FALSE);
+    off.y += 1;
+    off.x += 1;
+    draw_ghost(g, off);
+    draw_tetris(off, g->tetris, 0);
+    draw_map(g, g->map, off);
+    draw_stats(g, off);
 }

@@ -13,7 +13,7 @@ int line_full(char *line)
     for (int i = 0; line[i] != '\0'; i++)
         if (line[i] == EMPTY)
             count++;
-    if (count == 1)
+    if (count == 0)
         return TRUE;
     return FALSE;
 }

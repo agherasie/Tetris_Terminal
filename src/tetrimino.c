@@ -18,11 +18,16 @@ void land_tetris(game_t *g, tetriminos_t *tetris)
     tetris->amount += 1;
 }
 
+void swap_tetris(game_t *g)
+{
+    g->current = range(0, g->tetri_count - 1);
+    g->tetris = g->tetri[g->current];
+    g->next = range(0, g->tetri_count - 1);
+}
+
 void reset_tetris(game_t *g)
 {
-    g->current = g->next;
-    g->tetris = g->tetri[g->current];
-    g->next = range(0, 6);
+    swap_tetris(g);
     g->tetris->pos.x = g->map_size.x / 2;
     g->tetris->pos.y = 0;
 }
@@ -37,16 +42,15 @@ void rotate_shape(tetriminos_t *t)
         transposed[y][t->size.y] = '\0';
     }
     transposed[t->size.x] = NULL;
+    for (int y = 0; y < t->size.y; y++)
+        free(t->shape[y]);
+    free(t->shape);
     int temp = t->size.x;
     t->size.x = t->size.y;
     t->size.y = temp;
-    char **shape_to_free = t->shape;
     t->shape = transposed;
-    for (int y = 0; y < t->size.y; y++) {
+    for (int y = 0; y < t->size.y; y++)
         my_revstr(t->shape[y]);
-        free(shape_to_free[y]);
-    }
-    free(shape_to_free);
 }
 
 void file_path(char *file)

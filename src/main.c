@@ -19,6 +19,7 @@ int help(char **av)
 {
     for (int i = 1; av[i]; i++)
         if (my_strcmp(av[i], "--help") == 0 || my_strcmp(av[i], "-h") == 0) {
+            printf("Usage: %s [options]\n", av[0]);
             printf("%s\n", read_to_charstar("help.txt"));
             return 0;
         }

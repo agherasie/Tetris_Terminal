@@ -16,7 +16,7 @@ void draw_tetris(vector2_t pos, tetriminos_t *tetris, int state)
     }
     for (int y = 0; y < tetris->size.y; y++)
         for (int x = 0; x < tetris->size.x; x++) {
-            char color = state != 2 ? tetris->color : 7;
+            char color = state != 2 ? tetris->color : 0;
             attron(COLOR_PAIR(color));
             char c = tetris->shape[y][x];
             mvaddch(disp_pos.y + y, disp_pos.x + x * 2, c);
@@ -49,16 +49,6 @@ void draw_ghost(game_t *g, vector2_t offset)
     draw_tetris((vector2_t){offset.x, i + offset.y - 1}, g->tetris, 2);
 }
 
-void draw_status(game_t *g, vector2_t off)
-{
-    off.x -= 25;
-    draw_rectangle((vector2_t){20, 10}, off, TRUE);
-    mvprintw(off.y + 3, off.x + 3, "level %i", g->level);
-    mvprintw(off.y + 4, off.x + 3, "score %i", g->score);
-    mvprintw(off.y + 5, off.x + 3, "hiscore %i", g->hiscore);
-    mvprintw(off.y + 6, off.x + 3, "time %i", g->time / 30);
-}
-
 void draw_ui(game_t *g)
 {
     refresh();
@@ -69,7 +59,6 @@ void draw_ui(game_t *g)
     off.y = LINES / 2 - g->map_size.y / 2;
     draw_rectangle(size, off, FALSE);
     off.y += 1;
-    // draw_status(g, off);
     draw_ghost(g, off);
     draw_tetris(off, g->tetris, 0);
     draw_map(g, g->map, off);

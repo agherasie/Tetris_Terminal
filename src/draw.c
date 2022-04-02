@@ -51,14 +51,16 @@ void draw_ghost(game_t *g, vector2_t offset)
 
 void draw_stats(game_t *g, vector2_t off)
 {
-    mvprintw(off.y - 2, off.x + g->map_size.x / 2 + 2, "LINES %i", g->lines - 10);
-    mvprintw(off.y + 2, off.x + g->map_size.x * 2 + 4, "TOP");
-    mvprintw(off.y + 3, off.x + g->map_size.x * 2 + 4, "%.7i", g->hiscore);
-    mvprintw(off.y + 4, off.x + g->map_size.x * 2 + 4, "SCORE");
-    mvprintw(off.y + 5, off.x + g->map_size.x * 2 + 4, "%.7i", g->score);
+    int xoffset = off.x + g->map_size.x / 2 + 2;
+    mvprintw(off.y - 2, xoffset, "LINES %i", g->lines - 10);
+    xoffset = off.x + g->map_size.x * 2 + 4;
+    mvprintw(off.y + 2, xoffset, "TOP");
+    mvprintw(off.y + 3, xoffset, "%.7i", g->hiscore);
+    mvprintw(off.y + 4, xoffset, "SCORE");
+    mvprintw(off.y + 5, xoffset, "%.7i", g->score);
     draw_hint(g, off, g->tetri[g->next]);
-    mvprintw(off.y + 16, off.x + g->map_size.x * 2 + 4, "LEVEL");
-    mvprintw(off.y + 17, off.x + g->map_size.x * 2 + 4, "% 5i", g->level);
+    mvprintw(off.y + 16, xoffset, "LEVEL");
+    mvprintw(off.y + 17, xoffset, "% 5i", g->level);
     mvprintw(off.y, 3, "STATISTICS");
     int y_offset = 2;
     for (int i = 0; i < g->tetri_count - 1; i++) {

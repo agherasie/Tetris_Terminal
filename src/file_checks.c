@@ -7,17 +7,6 @@
 
 #include "../include/tetris.h"
 
-int ends_with(char *str, char *ending)
-{
-    int i = 0;
-    for (str; *str != '\0'; str++)
-        if (*str == ending[i])
-            i++;
-    if (i == my_strlen(ending))
-        return TRUE;
-    return FALSE;
-}
-
 int valid_checks(int line_count, char *buffer)
 {
     int is_valid = TRUE;

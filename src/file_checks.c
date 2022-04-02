@@ -53,7 +53,5 @@ int file_error_detection(char *path)
 {
     if (ends_with(path, ".tetrimino") == FALSE)
         return FALSE;
-    if (is_valid_tetrimino(path) == FALSE)
-        return FALSE;
     return TRUE;
 }

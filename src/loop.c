@@ -63,6 +63,10 @@ int loop(game_t *g)
             return 1;
         return 0;
     }
+    if (g->map == NULL) {
+        init_map(g);
+        g->tetris->pos.x += g->map_size.x / 2 - g->tetris->size.x / 2;
+    }
     g->time++;
     draw_ui(g);
     movement(g);

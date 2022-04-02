@@ -91,6 +91,8 @@ int count_file(game_t *g);
 // DRAW
 void draw_rectangle(vector2_t size, vector2_t pos, int corner_type);
 void draw_tetris(vector2_t pos, tetriminos_t *tetris, int player);
+void draw_hint(game_t *g, vector2_t offset, tetriminos_t *tetris);
+void draw_ghost(game_t *g, vector2_t offset);
 void draw_map(game_t *g, char **map, vector2_t offset);
 void draw_ui(game_t *g);
 
@@ -125,6 +127,23 @@ int line_empty(char *line);
 int line_active(char *line);
 void empty_line(char *line);
 int full_lines(game_t *g);
+
+// BUTTONS
+void draw_button(game_t *g, char *title, int rank);
+int select_button(game_t *g, int input, int button_count);
+int buttons(game_t *g, int input);
+void set_param(game_t *g, int *param, char type, int rank);
+void slider(game_t *g, int *param, vector2_t vars, vector2_t range);
+int settings_buttons(game_t *g, int input);
+int main_buttons(game_t *g, int input);
+int pause_buttons(game_t *g, int input);
+
+// MENUS
+int settings_menu(game_t *g);
+int draw_menu(game_t *g, char **buttons);
+int draw_screen(game_t *g, int *button_count);
+int pause_game(game_t *g);
+int scoreboard(game_t *g);
 
 // GAME
 int loop(game_t *g);

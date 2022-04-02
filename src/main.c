@@ -53,7 +53,7 @@ int emergency_exit(game_t *g, int exitcode)
         set_score(&g->score);
     free_all(g);
     exit(exitcode);
-} 
+}
 
 int main(int ac, char **av)
 {

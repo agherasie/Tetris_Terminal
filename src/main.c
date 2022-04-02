@@ -26,32 +26,13 @@ int help(char **av)
     return 1;
 }
 
-game_t *init_game(int ac, char **av)
-{
-    srand(time(NULL));
-    if (help(av) == 0)
-        return NULL;
-    game_t *g = init_params();
-    handle_h(ac, av, g);
-    if (g->debug_mode == 1) {
-        handle_d(g);
-        return NULL;
-    }
-    ncurses_init();
-    g->tetri = init_tetri(g);
-    refresh();
-    clear();
-    g->next = range(0, g->tetri_count - 1);
-    swap_tetris(g);
-    g->lines = g->level * 10;
-    return g;
-}
-
 void free_all(game_t *g)
 {
-    for (int i = 0; g->map[i]; i++)
-        free(g->map[i]);
-    free(g->map);
+    if (g->map != NULL) {
+        for (int i = 0; g->map[i]; i++)
+            free(g->map[i]);
+        free(g->map);
+    }
     for (int i = 0; i < g->tetri_count - 1; i++) {
         for (int j = 0; j < g->tetri[i]->size.y; j++)
             free(g->tetri[i]->shape[j]);

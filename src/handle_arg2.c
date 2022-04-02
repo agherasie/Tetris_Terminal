@@ -43,17 +43,17 @@ void handle_h4(int ac, char **av, game_t *game, int i)
 void handle_d(game_t *g)
 {
     my_putstr("Key left: ");
-    keys(g);
+    my_putstr(keyname(g->keys->l));
     my_putstr(" (");
     my_put_nbr(g->keys->l);
     my_putstr(")\n");
     my_putstr("Key right: ");
-    keys2(g);
+    my_putstr(keyname(g->keys->r));
     my_putstr(" (");
     my_put_nbr(g->keys->r);
     my_putstr(")\n");
     my_putstr("Key turn: ");
-    keys3(g);
+    my_putstr(keyname(g->keys->t));
     my_putstr(" (");
     my_put_nbr(g->keys->t);
     my_putstr(")\n");
@@ -63,7 +63,7 @@ void handle_d(game_t *g)
 void handle_d2(game_t *g)
 {
     my_putstr("Key drop: ");
-    keys4(g);
+    my_putstr(keyname(g->keys->d));
     my_putstr(" (");
     my_put_nbr(g->keys->d);
     my_putstr(")\n");
@@ -95,6 +95,5 @@ void handle_d3(game_t *g)
     my_putchar('*');
     my_put_nbr(g->map_size.x);
     my_putstr("\n\n");
-    my_putstr("Number of tetriminos: 7\n");
     handle_d4(g);
 }

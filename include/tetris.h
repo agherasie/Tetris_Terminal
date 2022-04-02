@@ -7,9 +7,13 @@
 
 #ifndef TETRIS_H_
     #define TETRIS_H_
+    #include <sys/types.h>
+    #include <sys/stat.h>
+    #include <dirent.h>
     #include <stdlib.h>
     #include <stdio.h>
     #include <ncurses.h>
+    #include <curses.h>
     #include <sys/stat.h>
     #include <fcntl.h>
     #include <dirent.h>
@@ -58,6 +62,9 @@ typedef struct g {
     int hiscore;
     int reserve;
     int current;
+    int get1;
+    int get2;
+    int get3;
 } game_t;
 
 // PARAMS
@@ -72,15 +79,12 @@ void handle_d(game_t *g);
 void handle_d2(game_t *g);
 void handle_d3(game_t *g);
 void handle_d4(game_t *g);
-int keys(game_t *g);
-int keys2(game_t *g);
-int keys3(game_t *g);
-int keys4(game_t *g);
-void file_path(char *file);
-char *cpy_word(char *str, int i);
-char **my_str_to_word_array(char *str);
-int nb_words(char const *str);
-int word_len(char const *str, int i);
+int check_file(game_t *g);
+char *before_point(char *file);
+char *open_map(char *file);
+int my_getnbr2(char const *str);
+void continue_display(char *inside, game_t *g);
+int count_file(game_t *g);
 
 // DRAW
 void draw_rectangle(vector2_t size, vector2_t pos, int corner_type);

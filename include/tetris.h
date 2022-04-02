@@ -124,6 +124,7 @@ int help(char **av);
 int is_valid_tetrimino(char *filepath);
 int file_error_detection(char *path);
 int good_file(char *buff);
+int emergency_exit(game_t *g, int exitcode);
 
 // LINES
 int line_full(char *line);

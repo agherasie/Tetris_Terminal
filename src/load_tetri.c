@@ -44,6 +44,8 @@ tetriminos_t **init_tetri(game_t *g)
 {
     char *src_folder = "tetriminos/";
     int count = get_file_count(src_folder);
+    if (count == 0)
+        emergency_exit(g, 84);
     tetriminos_t **tetri = malloc(sizeof(tetriminos_t *) * (count + 1));
     DIR *folder;
     folder = opendir(src_folder);

@@ -53,8 +53,25 @@ void set_stats(game_t *g)
     g->level = g->lines / 10;
 }
 
+void pause_game(game_t *g)
+{
+    refresh();
+    clear();
+    char *logo = read_to_charstar("data/tetris.txt");
+    draw_buffer(logo, (vector2_t){5, LINES / 2 - 10}, "!");
+    free(logo);
+    const char *key = keyname(g->keys->p);
+    mvprintw(LINES / 2, COLS / 2 - 10, "PRESS '%s' to PLAY\n", key);
+    if (getch() == g->keys->p)
+        g->paused = -1;
+}
+
 int loop(game_t *g)
 {
+    if (g->paused == 1) {
+        pause_game(g);
+        return 0;
+    }
     if (resize_screen(g) == 0)
         return 0;
     g->time++;

@@ -51,7 +51,6 @@ void init_colors(void)
     init_pair(4, COLOR_YELLOW, COLOR_BLACK);
     init_pair(5, COLOR_MAGENTA, COLOR_BLACK);
     init_pair(6, COLOR_BLUE, COLOR_BLACK);
-    init_pair(7, COLOR_RED, COLOR_BLACK);
 }
 
 keys_t *init_keys(void)

@@ -18,6 +18,7 @@
     #include <fcntl.h>
     #include <dirent.h>
     #include "my.h"
+    #define MAX_LVL 10
     #define FULL '#'
     #define EMPTY ' '
     #define MAIN 0
@@ -41,6 +42,7 @@ typedef struct keys {
 
 typedef struct tetriminos {
     char **shape;
+    char **initial_shape;
     int color;
     int landed;
     vector2_t pos;

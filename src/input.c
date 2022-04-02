@@ -11,8 +11,8 @@ void level_in_range(game_t *g)
 {
     if (g->level < 1)
         g->level = 1;
-    if (g->level > 10)
-        g->level = 10;
+    if (g->level > MAX_LVL)
+        g->level = MAX_LVL;
 }
 
 void movement_input(game_t *g, int input)
@@ -35,7 +35,7 @@ int read_input(game_t *g)
 {
     cbreak();
     level_in_range(g);
-    timeout(30);
+    timeout(40);
     int input = getch();
     movement_input(g, input);
     if (g->keys->p == input) {

@@ -37,6 +37,7 @@ void free_all(game_t *g)
         for (int j = 0; j < g->tetri[i]->size.y; j++)
             free(g->tetri[i]->shape[j]);
         free(g->tetri[i]->shape);
+        free(g->tetri[i]->initial_shape);
         free(g->tetri[i]);
     }
     free(g->tetri);
@@ -53,7 +54,7 @@ int emergency_exit(game_t *g, int exitcode)
         set_score(&g->score);
     free_all(g);
     exit(exitcode);
-} 
+}
 
 int main(int ac, char **av)
 {

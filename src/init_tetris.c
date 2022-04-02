@@ -40,9 +40,13 @@ tetriminos_t *init_tetriminos(char *filepath)
     tetris->size = (vector2_t){data[0] - '0', data[2] - '0'};
     tetris->pos = (vector2_t){0, 0};
     tetris->color = data[4] - '0';
+    tetris->color %= 7;
+    if (tetris->color == 0)
+        tetris->color++;
     tetris->landed = FALSE;
     tetris->amount = 0;
     tetris->shape = shape_form(tetris, data);
+    tetris->initial_shape = shape_form(tetris, data);
     free(data_address);
     return tetris;
 }

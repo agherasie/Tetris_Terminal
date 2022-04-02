@@ -36,8 +36,8 @@ void draw_stats(game_t *g, vector2_t off)
 
 void draw_ui(game_t *g)
 {
+    erase();
     refresh();
-    clear();
     vector2_t size = {g->map_size.x * 2, g->map_size.y + 1};
     vector2_t off;
     off.x = COLS / 2 - g->map_size.x / 2;

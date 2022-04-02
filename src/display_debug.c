@@ -15,9 +15,8 @@ char *before_point(char *file)
     return new_file;
 }
 
-int good_file(char *buff, game_t *g)
+int good_file(char *buff)
 {
-
     for (int i = 0; buff[i]; i++) {
         if (buff[i] >= 'A' && buff[i] <= 'Z')
             return 1;
@@ -66,7 +65,7 @@ int check_file(game_t *g)
             inside = read_to_charstar(path);
             printf("Tetriminos '");
             printf("%s", before_point(file));
-            if (good_file(inside, g) == 1)
+            if (good_file(inside) == 1)
                 printf("': error\n");
             else
                 continue_display(inside, g);

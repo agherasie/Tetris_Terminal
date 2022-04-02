@@ -123,6 +123,7 @@ int help(char **av);
 // ERROR HANDLING
 int is_valid_tetrimino(char *filepath);
 int file_error_detection(char *path);
+int good_file(char *buff);
 
 // LINES
 int line_full(char *line);

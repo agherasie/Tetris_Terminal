@@ -58,7 +58,7 @@ void pause_game(game_t *g)
     refresh();
     clear();
     char *logo = read_to_charstar("data/tetris.txt");
-    draw_buffer(logo, (vector2_t){5, LINES / 2 - 10}, "!");
+    draw_buffer(logo, (vector2_t){COLS / 2 - 30, LINES / 2 - 10}, "!");
     free(logo);
     const char *key = keyname(g->keys->p);
     mvprintw(LINES / 2, COLS / 2 - 10, "PRESS '%s' to PLAY\n", key);
@@ -68,12 +68,12 @@ void pause_game(game_t *g)
 
 int loop(game_t *g)
 {
+    if (resize_screen(g) == 0)
+        return 0;
     if (g->paused == 1) {
         pause_game(g);
         return 0;
     }
-    if (resize_screen(g) == 0)
-        return 0;
     g->time++;
     draw_ui(g);
     movement(g);

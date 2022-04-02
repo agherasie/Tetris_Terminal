@@ -68,13 +68,10 @@ typedef struct g {
 } game_t;
 
 // PARAMS
-char *handle_arg(char *arg);
-char *handle_arg2(char *arg);
-char *handle_arg3(char *arg);
-void handle_h2(int ac, char **av, game_t *game, int i);
-void handle_h3(int ac, char **av, game_t *game, int i);
-void handle_h4(int ac, char **av, game_t *game, int i);
+char *handle_arg(char *arg, int offset, char sep);
 void handle_h(int ac, char **av, game_t *game);
+void handle_h_char(char key_code, int *key, char *src, char label);
+void handle_h_str(char *src, char *str, int *key);
 void handle_d(game_t *g);
 void handle_d2(game_t *g);
 void handle_d3(game_t *g);
@@ -109,7 +106,6 @@ tetriminos_t *init_tetriminos(char *filepath);
 void skip_to_line(char **data);
 
 // ERROR HANDLING
-int ends_with(char *str, char *ending);
 int is_valid_tetrimino(char *filepath);
 int file_error_detection(char *path);
 

@@ -21,6 +21,8 @@ int my_strcmp(char const *s1, char const *s2);
 char *my_strcpy(char *dest, char const *src);
 char *my_strncpy(char *dest, char const *src, int n);
 char *my_strcat(char *str1, char *str2);
+int starts_with(char *str1, char *str2, char end);
+int ends_with(char *str, char *ending);
 
 // FILE
 char *read_to_charstar(char *path);

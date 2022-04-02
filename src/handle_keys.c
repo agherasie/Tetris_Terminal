@@ -7,14 +7,6 @@
 
 #include "../include/tetris.h"
 
-void handle_d4(game_t *g)
-{
-    my_putstr("Number of tetriminos: ");
-    my_put_nbr(count_file(g));
-    my_putchar('\n');
-    check_file(g);
-}
-
 int count_file(game_t *g)
 {
     struct dirent *dirent;
@@ -32,4 +24,20 @@ int count_file(game_t *g)
             count++;
     }
     return count;
+}
+
+void handle_d(game_t *g)
+{
+    printf("Key left: %s (%i)\n", keyname(g->keys->l), g->keys->l);
+    printf("Key right: %s (%i)\n", keyname(g->keys->r), g->keys->r);
+    printf("Key turn: %s (%i)\n", keyname(g->keys->t), g->keys->t);
+    printf("Key drop: %s (%i)\n", keyname(g->keys->d), g->keys->d);
+    printf("Key quit: %s (%i)\n", keyname(g->keys->q), g->keys->q);
+    printf("Key pause: %s (%i)\n", keyname(g->keys->p), g->keys->p);
+    printf("Next: ");
+    printf(g->show_next == 1 ? "Yes\n" : "No\n");
+    printf("Level: %i\n", g->level);
+    printf("Size: %i*%i\n\n", g->map_size.y, g->map_size.x);
+    printf("Number of tetriminos: %i\n", count_file(g));
+    check_file(g);
 }

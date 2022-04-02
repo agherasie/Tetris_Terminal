@@ -32,22 +32,22 @@ void display_tetri(char *buff)
     int i = 0;
     for (; buff[i] != '\n'; i++);
     for (; buff[i] != '\0'; i++)
-        my_putchar(buff[i]);
+        printf("%c", buff[i]);
 }
 
 void continue_display(char *inside, game_t *g)
 {
-    my_putstr("': size ");
+    printf("': size ");
     g->get1 = my_getnbr2(inside);
     inside += 2;
     g->get2 = my_getnbr2(inside);
     inside += 2;
     g->get3 = my_getnbr2(inside);
-    my_put_nbr(g->get1);
-    my_putchar('*');
-    my_put_nbr(g->get2);
-    my_putstr(", color ");
-    my_put_nbr(g->get3);
+    printf("%i", g->get1);
+    printf("*");
+    printf("%i", g->get2);
+    printf(", color ");
+    printf("%i", g->get3);
     display_tetri(inside);
 }
 
@@ -59,18 +59,18 @@ int check_file(game_t *g)
     char *path;
     char *inside;
     file_name = opendir("tetriminos");
-
     while ((dirent = readdir(file_name)) != NULL) {
         file = dirent->d_name;
         path = my_strcat("tetriminos/", file);
         if (file_error_detection(path) == TRUE) {
             inside = read_to_charstar(path);
-            my_putstr("Tetriminos '");
-            my_putstr(before_point(file));
+            printf("Tetriminos '");
+            printf("%s", before_point(file));
             if (good_file(inside, g) == 1)
-                my_putstr("': error\n");
+                printf("': error\n");
             else
                 continue_display(inside, g);
         }
+        free(path);
     }
 }

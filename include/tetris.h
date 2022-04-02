@@ -20,6 +20,10 @@
     #include "my.h"
     #define FULL '#'
     #define EMPTY ' '
+    #define MAIN 0
+    #define PAUSE 1
+    #define SETTINGS 2
+    #define SCOREBOARD 3
 
 typedef struct vector2 {
     int x;
@@ -67,6 +71,8 @@ typedef struct g {
     int get3;
     int animation;
     int paused;
+    int select;
+    int screen;
 } game_t;
 
 // PARAMS

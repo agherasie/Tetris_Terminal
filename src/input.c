@@ -10,6 +10,8 @@
 int read_input(game_t *g)
 {
     cbreak();
+    if (g->level < 1)
+        g->level = 1;
     if (g->level > 10)
         g->level = 10;
     timeout(30);
@@ -26,8 +28,10 @@ int read_input(game_t *g)
         try_move(g, move_down);
     if (g->keys->t == input)
         rotate_shape(t);
-    if (g->keys->p == input)
+    if (g->keys->p == input) {
         g->paused *= -1;
+        g->screen = PAUSE;
+    }
     if (g->keys->q == input)
         return 1;
     return 0;

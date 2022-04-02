@@ -60,6 +60,7 @@ game_t *init_params(void)
     g->current = 0;
     g->reserve = -1;
     g->animation = 0;
+    g->paused = 1;
     get_score(&g->hiscore);
     return g;
 }

@@ -66,6 +66,7 @@ typedef struct g {
     int get2;
     int get3;
     int animation;
+    int paused;
 } game_t;
 
 // PARAMS
@@ -90,6 +91,7 @@ void draw_ui(game_t *g);
 // ANIMATION
 void draw_frame(char *filepath, int number, vector2_t pos);
 void draw_animation(game_t *g, vector2_t off);
+void draw_buffer(char *buffer, vector2_t pos, char *sep);
 
 // TETRI
 void land_tetris(game_t *g, tetriminos_t *tetris);

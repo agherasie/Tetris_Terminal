@@ -26,7 +26,9 @@ int read_input(game_t *g)
         try_move(g, move_down);
     if (g->keys->t == input)
         rotate_shape(t);
-    if (input == 'q')
+    if (g->keys->p == input)
+        g->paused *= -1;
+    if (g->keys->q == input)
         return 1;
     return 0;
 }

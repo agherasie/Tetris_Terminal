@@ -46,6 +46,7 @@ tetriminos_t *init_tetriminos(char *filepath)
     tetris->landed = FALSE;
     tetris->amount = 0;
     tetris->shape = shape_form(tetris, data);
+    tetris->initial_shape = shape_form(tetris, data);
     free(data_address);
     return tetris;
 }

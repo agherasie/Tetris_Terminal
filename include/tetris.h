@@ -41,6 +41,7 @@ typedef struct keys {
 
 typedef struct tetriminos {
     char **shape;
+    char **initial_shape;
     int color;
     int landed;
     vector2_t pos;

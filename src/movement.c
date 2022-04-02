@@ -58,8 +58,6 @@ int try_move(game_t *g, vector2_t vector)
 
 void movement(game_t *g)
 {
-    if (g->rotate >= 4)
-        g->rotate = 0;
     if (g->time % (11 - g->level) == 0) {
         if (try_move(g, (vector2_t){0, 1}) == -1)
             land_tetris(g, g->tetris);

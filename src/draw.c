@@ -15,7 +15,9 @@ void draw_statistics(game_t *g, vector2_t off)
         vector2_t pos = {off.x - 20, y_offset + i};
         draw_tetris(pos, g->tetri[i], 1);
         mvprintw(y_offset + i, off.x - 10, "%.3i", g->tetri[i]->amount);
-        y_offset += g->tetri[i]->size.y;
+        int y = 0;
+        for (; g->tetri[i]->initial_shape[y]; y++);
+        y_offset += y;
     }
 }
 

@@ -37,6 +37,7 @@ void free_all(game_t *g)
         for (int j = 0; j < g->tetri[i]->size.y; j++)
             free(g->tetri[i]->shape[j]);
         free(g->tetri[i]->shape);
+        free(g->tetri[i]->initial_shape);
         free(g->tetri[i]);
     }
     free(g->tetri);

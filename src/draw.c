@@ -85,4 +85,5 @@ void draw_ui(game_t *g)
     draw_tetris(off, g->tetris, 0);
     draw_map(g, g->map, off);
     draw_stats(g, off);
+    draw_animation(g, off);
 }

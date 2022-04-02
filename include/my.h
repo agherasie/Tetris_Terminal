@@ -23,6 +23,8 @@ char *my_strncpy(char *dest, char const *src, int n);
 char *my_strcat(char *str1, char *str2);
 int starts_with(char *str1, char *str2, char end);
 int ends_with(char *str, char *ending);
+char *to_upper(char *str);
+char *to_lower(char *str);
 
 // FILE
 char *read_to_charstar(char *path);

@@ -58,8 +58,8 @@ game_t *init_params(void)
     g->lines = 0;
     g->score = 0;
     g->current = 0;
-    g->next = 0;
     g->reserve = -1;
+    g->animation = 0;
     get_score(&g->hiscore);
     return g;
 }

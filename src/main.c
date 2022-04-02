@@ -44,17 +44,26 @@ void free_all(game_t *g)
     free(g);
 }
 
-int main(int ac, char **av)
+int emergency_exit(game_t *g, int exitcode)
 {
-    game_t *g = init_game(ac, av);
-    if (g == NULL)
-        return 0;
-    while (loop(g) == 0);
     refresh();
     clear();
     endwin();
     if (g->score > g->hiscore)
         set_score(&g->score);
     free_all(g);
-    return 0;
+    exit(exitcode);
+} 
+
+int main(int ac, char **av)
+{
+    DIR *dir = opendir("tetriminos/");
+    if (dir == NULL)
+        return 84;
+    closedir(dir);
+    game_t *g = init_game(ac, av);
+    if (g == NULL)
+        return 0;
+    while (loop(g) == 0);
+    emergency_exit(g, 0);
 }

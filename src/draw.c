@@ -11,7 +11,7 @@ void draw_statistics(game_t *g, vector2_t off)
 {
     mvprintw(off.y, off.x - 20, "STATISTICS");
     int y_offset = 2 + off.y;
-    for (int i = 0; i < g->tetri_count - 1; i++) {
+    for (int i = 0; i < g->tetri_count; i++) {
         vector2_t pos = {off.x - 20, y_offset + i};
         draw_tetris(pos, g->tetri[i], 1);
         mvprintw(y_offset + i, off.x - 10, "%.3i", g->tetri[i]->amount);

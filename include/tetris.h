@@ -80,6 +80,7 @@ char *before_point(char *file);
 char *open_map(char *file);
 int my_getnbr2(char const *str);
 void continue_display(char *inside, game_t *g);
+int count_file(game_t *g);
 
 // DRAW
 void draw_rectangle(vector2_t size, vector2_t pos, int corner_type);

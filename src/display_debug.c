@@ -58,11 +58,11 @@ int check_file(game_t *g)
     char *file;
     char *path;
     char *inside;
-    file_name = opendir("basetetri");
+    file_name = opendir("tetriminos");
 
     while ((dirent = readdir(file_name)) != NULL) {
         file = dirent->d_name;
-        path = my_strcat("basetetri/", file);
+        path = my_strcat("tetriminos/", file);
         if (file_error_detection(path) == TRUE) {
             inside = read_to_charstar(path);
             my_putstr("Tetriminos '");

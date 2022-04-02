@@ -95,6 +95,5 @@ void handle_d3(game_t *g)
     my_putchar('*');
     my_put_nbr(g->map_size.x);
     my_putstr("\n\n");
-    my_putstr("Number of tetriminos: 7\n");
     handle_d4(g);
 }

@@ -61,6 +61,8 @@ game_t *init_params(void)
     g->reserve = -1;
     g->animation = 0;
     g->paused = 1;
+    g->select = 0;
+    g->screen = MAIN;
     get_score(&g->hiscore);
     return g;
 }

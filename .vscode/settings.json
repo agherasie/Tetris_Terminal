@@ -9,6 +9,7 @@
         "vector": "c",
         "system_error": "c",
         "my.h": "c",
-        "sstream": "c"
+        "sstream": "c",
+        "type_traits": "c"
     }
 }

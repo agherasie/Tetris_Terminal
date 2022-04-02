@@ -50,30 +50,23 @@ void set_stats(game_t *g)
         g->score += lines * 100 * g->level;
     }
     g->lines += lines;
-    g->level = g->lines / 10;
-}
-
-void pause_game(game_t *g)
-{
-    refresh();
-    clear();
-    char *logo = read_to_charstar("data/tetris.txt");
-    draw_buffer(logo, (vector2_t){5, LINES / 2 - 10}, "!");
-    free(logo);
-    const char *key = keyname(g->keys->p);
-    mvprintw(LINES / 2, COLS / 2 - 10, "PRESS '%s' to PLAY\n", key);
-    if (getch() == g->keys->p)
-        g->paused = -1;
+    if (g->lines >= g->level * 10 && g->lines - lines < g->level * 10)
+        g->level++;
 }
 
 int loop(game_t *g)
 {
-    if (g->paused == 1) {
-        pause_game(g);
-        return 0;
-    }
     if (resize_screen(g) == 0)
         return 0;
+    if (g->paused == 1) {
+        if (pause_game(g) == 1)
+            return 1;
+        return 0;
+    }
+    if (g->map == NULL) {
+        init_map(g);
+        g->tetris->pos.x += g->map_size.x / 2 - g->tetris->size.x / 2;
+    }
     g->time++;
     draw_ui(g);
     movement(g);

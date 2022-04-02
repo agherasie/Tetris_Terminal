@@ -41,10 +41,8 @@ game_t *init_game(int ac, char **av)
     g->tetri = init_tetri(g);
     refresh();
     clear();
-    init_map(g);
     g->next = range(0, g->tetri_count - 1);
     swap_tetris(g);
-    g->tetris->pos.x += g->map_size.x / 2 - g->tetris->size.x / 2;
     g->lines = g->level * 10;
     return g;
 }

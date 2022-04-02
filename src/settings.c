@@ -18,7 +18,7 @@ char *key_button_title(game_t *g, char *title, int key)
 
 int settings_buttons(game_t *g, int input)
 {
-    slider(g, &g->level, (vector2_t){0, input}, (vector2_t){1, 9});
+    slider(g, &g->level, (vector2_t){0, input}, (vector2_t){1, MAX_LVL});
     slider(g, &g->map_size.y, (vector2_t){6, input}, (vector2_t){5, 30});
     slider(g, &g->map_size.x, (vector2_t){7, input}, (vector2_t){5, 30});
     if (input != g->keys->p)

@@ -18,6 +18,7 @@
     #include <fcntl.h>
     #include <dirent.h>
     #include "my.h"
+    #define MAX_LVL 10
     #define FULL '#'
     #define EMPTY ' '
     #define MAIN 0

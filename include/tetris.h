@@ -116,6 +116,9 @@ game_t *init_params(void);
 tetriminos_t **init_tetri(game_t *g);
 tetriminos_t *init_tetriminos(char *filepath);
 void skip_to_line(char **data);
+game_t *init_game(int ac, char **av);
+void ncurses_init(void);
+int help(char **av);
 
 // ERROR HANDLING
 int is_valid_tetrimino(char *filepath);

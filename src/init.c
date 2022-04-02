@@ -7,6 +7,28 @@
 
 #include "../include/tetris.h"
 
+game_t *init_game(int ac, char **av)
+{
+    srand(time(NULL));
+    if (help(av) == 0)
+        return NULL;
+    game_t *g = init_params();
+    g->map = NULL;
+    handle_h(ac, av, g);
+    if (g->debug_mode == 1) {
+        handle_d(g);
+        return NULL;
+    }
+    ncurses_init();
+    g->tetri = init_tetri(g);
+    refresh();
+    clear();
+    g->next = range(0, g->tetri_count - 1);
+    swap_tetris(g);
+    g->lines = g->level * 10;
+    return g;
+}
+
 void init_map(game_t *g)
 {
     g->map = malloc(sizeof(char *) * (g->map_size.y + 1));

@@ -21,8 +21,10 @@ tetriminos_t *init_tetriminos(char *filepath)
     char *data = read_to_charstar(filepath);
     char *data_address = data;
     tetris->size = (vector2_t){data[0] - '0', data[2] - '0'};
+    tetris->pos = (vector2_t){0, 0};
     tetris->color = data[4] - '0';
     tetris->landed = FALSE;
+    tetris->amount = 0;
     tetris->shape = malloc(sizeof(char *) * (tetris->size.y + 1));
     for (int y = 0; y < tetris->size.y; y++) {
         skip_to_line(&data);
@@ -55,11 +57,11 @@ int get_file_count(char *path)
     return count;
 }
 
-tetriminos_t **init_tetri(void)
+tetriminos_t **init_tetri(game_t *g)
 {
     char *src_folder = "tetriminos/";
     int count = get_file_count(src_folder);
-    tetriminos_t **tetri = malloc(sizeof(tetriminos_t *) * count);
+    tetriminos_t **tetri = malloc(sizeof(tetriminos_t *) * (count + 1));
     DIR *folder;
     struct dirent *file;
     folder = opendir(src_folder);
@@ -75,6 +77,8 @@ tetriminos_t **init_tetri(void)
         free(path);
         i++;
     }
+    tetri[count] = NULL;
     closedir(folder);
+    g->tetri_count = count;
     return tetri;
 }

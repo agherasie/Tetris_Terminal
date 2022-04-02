@@ -41,6 +41,7 @@ typedef struct tetriminos {
     int landed;
     vector2_t pos;
     vector2_t size;
+    int amount;
 } tetriminos_t;
 
 typedef struct g {
@@ -52,12 +53,15 @@ typedef struct g {
     char **map;
     tetriminos_t **tetri;
     tetriminos_t *tetris;
+    int tetri_count;
     int rotate;
     int time;
     int next;
     int lines;
     int score;
     int hiscore;
+    int reserve;
+    int current;
     int get1;
     int get2;
     int get3;
@@ -91,6 +95,7 @@ void draw_ui(game_t *g);
 // TETRI
 void land_tetris(game_t *g, tetriminos_t *tetris);
 void reset_tetris(game_t *g);
+void swap_tetris(game_t *g);
 void rotate_shape(tetriminos_t *t);
 
 // INIT
@@ -99,7 +104,7 @@ void init_map(game_t *g);
 void init_colors(void);
 keys_t *init_keys(void);
 game_t *init_params(void);
-tetriminos_t **init_tetri(void);
+tetriminos_t **init_tetri(game_t *g);
 tetriminos_t *init_tetriminos(char *filepath);
 void skip_to_line(char **data);
 

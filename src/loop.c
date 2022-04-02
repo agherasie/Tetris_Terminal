@@ -22,11 +22,11 @@ int check_pos(game_t *g)
 
 void gravity(game_t *g)
 {
-    for (int y = 0; g->map[y + 1]; y++)
-        if (line_active(g->map[y]) == TRUE
-        && line_empty(g->map[y + 1]) == TRUE) {
-            my_strcpy(g->map[y + 1], g->map[y]);
-            empty_line(g->map[y]);
+    for (int y = g->map_size.y - 1; y > 0; y--)
+        if (line_active(g->map[y - 1]) == TRUE
+        && line_empty(g->map[y]) == TRUE) {
+            my_strcpy(g->map[y], g->map[y - 1]);
+            empty_line(g->map[y - 1]);
         }
 }
 

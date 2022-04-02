@@ -74,4 +74,3 @@ int check_file(game_t *g)
         }
     }
 }
-

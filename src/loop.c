@@ -44,9 +44,11 @@ int resize_screen(game_t *g)
 void set_stats(game_t *g)
 {
     int lines = full_lines(g);
-    if (lines >= 4)
-        g->score += 100;
-    g->score += lines * 10;
+    g->score += lines * 100 * g->level;
+    if (lines >= 4) {
+        g->animation = 1;
+        g->score += lines * 100 * g->level;
+    }
     g->lines += lines;
     g->level = g->lines / 10;
 }

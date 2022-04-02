@@ -20,10 +20,7 @@ void land_tetris(game_t *g, tetriminos_t *tetris)
 
 void swap_tetris(game_t *g)
 {
-    if (g->next)
-        g->current = g->next;
-    else
-        g->current = range(0, g->tetri_count - 1);
+    g->current = g->next;
     g->tetris = g->tetri[g->current];
     g->next = range(0, g->tetri_count - 1);
 }
@@ -31,6 +28,7 @@ void swap_tetris(game_t *g)
 void reset_tetris(game_t *g)
 {
     swap_tetris(g);
+    g->animation = 0;
     g->tetris->pos.x = g->map_size.x / 2;
     g->tetris->pos.y = 0;
 }

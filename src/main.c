@@ -32,7 +32,7 @@ game_t *init_game(int ac, char **av)
     if (help(av) == 0)
         return NULL;
     game_t *g = init_params();
-    // handle_h(ac, av, g);
+    handle_h(ac, av, g);
     if (g->debug_mode == 1) {
         handle_d(g);
         return NULL;

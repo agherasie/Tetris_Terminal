@@ -54,7 +54,7 @@ void reserve_shape(game_t *g)
     reset_tetris(g);
 }
 
-void read_input(game_t *g)
+int read_input(game_t *g)
 {
     cbreak();
     if (g->level > 10)
@@ -75,6 +75,9 @@ void read_input(game_t *g)
         rotate_shape(t);
     if (input == 'r' && g->show_next == TRUE)
         reserve_shape(g);
+    if (input == 'q')
+        return 1;
+    return 0;
 }
 
 void movement(game_t *g)

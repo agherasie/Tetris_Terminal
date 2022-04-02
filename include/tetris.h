@@ -123,7 +123,7 @@ int full_lines(game_t *g);
 // GAME
 int loop(game_t *g);
 int try_move(game_t *g, vector2_t vector);
-void read_input(game_t *g);
+int read_input(game_t *g);
 int valid_pos(game_t *g, vector2_t vector);
 void movement(game_t *g);
 

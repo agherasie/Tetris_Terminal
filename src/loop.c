@@ -60,7 +60,8 @@ int loop(game_t *g)
     movement(g);
     set_stats(g);
     gravity(g);
-    read_input(g);
+    if (read_input(g) == 1)
+        return 1;
     erase();
     return check_pos(g);
 }

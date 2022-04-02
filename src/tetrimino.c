@@ -20,7 +20,10 @@ void land_tetris(game_t *g, tetriminos_t *tetris)
 
 void swap_tetris(game_t *g)
 {
-    g->current = range(0, g->tetri_count - 1);
+    if (g->next)
+        g->current = g->next;
+    else
+        g->current = range(0, g->tetri_count - 1);
     g->tetris = g->tetri[g->current];
     g->next = range(0, g->tetri_count - 1);
 }

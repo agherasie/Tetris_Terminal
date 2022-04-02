@@ -48,7 +48,6 @@ game_t *init_params(void)
 {
     game_t *g = malloc(sizeof(game_t));
     g->keys = init_keys();
-    g->map_size;
     g->map_size.x = 10;
     g->map_size.y = 20;
     g->level = 1;
@@ -59,6 +58,7 @@ game_t *init_params(void)
     g->lines = 0;
     g->score = 0;
     g->current = 0;
+    g->next = 0;
     g->reserve = -1;
     get_score(&g->hiscore);
     return g;

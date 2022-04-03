@@ -11,11 +11,11 @@ int good_file(char *buff)
 {
     for (int i = 0; buff[i]; i++) {
         if (buff[i] >= 'A' && buff[i] <= 'Z')
-            return 1;
+            return FALSE;
         if (buff[i] >= 'a' && buff[i] <= 'z')
-            return 1;
+            return FALSE;
     }
-    return 0;
+    return TRUE;
 }
 
 void display_tetri(char *buff)
@@ -50,7 +50,7 @@ void print_file(game_t *g, char *file_name)
         char *name = before_c(file_name, '.');
         printf("Tetriminos '");
         printf("%s", name);
-        if (good_file(inside) == 1)
+        if (good_file(inside) == FALSE)
             printf("': error\n");
         else
             continue_display(inside, g);

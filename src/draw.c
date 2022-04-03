@@ -24,7 +24,7 @@ void draw_statistics(game_t *g, vector2_t off)
 void draw_stats(game_t *g, vector2_t off)
 {
     int xoffset = off.x + g->map_size.x / 2 + 2;
-    mvprintw(off.y - 2, xoffset, "LINES %i", g->lines - 10);
+    mvprintw(off.y - 2, xoffset, "LINES %i", g->lines);
     xoffset = off.x + g->map_size.x * 2 + 4;
     mvprintw(off.y + 2, xoffset, "TOP");
     mvprintw(off.y + 3, xoffset, "%.7i", g->hiscore);

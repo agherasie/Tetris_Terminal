@@ -50,8 +50,10 @@ void set_stats(game_t *g)
         g->score += lines * 100 * g->level;
     }
     g->lines += lines;
-    if (g->lines >= g->level * 10 && g->lines - lines < g->level * 10)
+    if (g->lines >= 10) {
         g->level++;
+        g->lines -= 10;
+    }
 }
 
 int loop(game_t *g)

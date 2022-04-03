@@ -35,7 +35,7 @@ int read_input(game_t *g)
 {
     cbreak();
     level_in_range(g);
-    timeout(40);
+    timeout(60);
     int input = getch();
     movement_input(g, input);
     if (g->keys->p == input) {

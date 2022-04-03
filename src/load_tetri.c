@@ -15,8 +15,10 @@ int get_file_count(char *path)
     int count = 0;
     while ((file = readdir(folder))) {
         char *filepath = my_strcat(path, file->d_name);
-        if (file_error_detection(filepath) == TRUE)
+        char *buff = read_to_charstar(filepath);
+        if (file_error_detection(filepath) == TRUE && good_file(buff) == TRUE)
             count++;
+        free(buff);
         free(filepath);
     }
     closedir(folder);
@@ -30,11 +32,13 @@ void folder_ld(tetriminos_t **tetri, int count, DIR *folder, char *src_folder)
     while (i < count) {
         file = readdir(folder);
         char *path = my_strcat(src_folder, file->d_name);
-        if (file_error_detection(path) == FALSE) {
+        char *buff = read_to_charstar(path);
+        if (file_error_detection(path) == FALSE || good_file(buff) == FALSE) {
             free(path);
             continue;
         }
         tetri[i] = init_tetriminos(path);
+        free(buff);
         free(path);
         i++;
     }

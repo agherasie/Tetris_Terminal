@@ -27,7 +27,6 @@ game_t *init_game(int ac, char **av)
     clear();
     g->next = range(0, g->tetri_count - 1);
     swap_tetris(g);
-    g->lines = g->level * 10;
     return g;
 }
 

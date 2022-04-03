@@ -38,7 +38,7 @@ int settings_buttons(game_t *g, int input)
 int settings_menu(game_t *g)
 {
     draw_button(g, my_strcat("LEVEL: ", my_itoa(g->level)), 0);
-    draw_button(g, key_button_title(g, "LEVEL: ", g->keys->l), 1);
+    draw_button(g, key_button_title(g, "LEFT: ", g->keys->l), 1);
     draw_button(g, key_button_title(g, "RIGHT: ", g->keys->r), 2);
     draw_button(g, key_button_title(g, "TURN: ", g->keys->t), 3);
     draw_button(g, key_button_title(g, "DROP: ", g->keys->d), 4);

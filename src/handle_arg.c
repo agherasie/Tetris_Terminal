@@ -9,7 +9,7 @@
 
 void single_chr(game_t *game, char **av, int i)
 {
-    if (av[i + 1] == NULL)
+    if (av[i + 1] == NULL || (av[i + 1][0] < '0' || av[i + 1][0] > '9'))
         exit(84);
     handle_h_char('l', &game->keys->l, av[i + 1], av[i][1]);
     handle_h_char('r', &game->keys->r, av[i + 1], av[i][1]);

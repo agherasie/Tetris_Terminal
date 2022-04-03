@@ -42,11 +42,5 @@ int file_error_detection(char *path)
 {
     if (ends_with(path, ".tetrimino") == FALSE)
         return FALSE;
-    char *file_content = read_to_charstar(path);
-    if (good_file(file_content) == 1) {
-        free(file_content);
-        return FALSE;
-    }
-    free(file_content);
     return TRUE;
 }

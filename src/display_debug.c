@@ -70,5 +70,4 @@ int check_file(game_t *g)
             free(inside);
         }
         free(path);
-    }
 }

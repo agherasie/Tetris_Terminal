@@ -90,6 +90,8 @@ void continue_display(char *inside, game_t *g);
 int count_file(game_t *g);
 char **valid_files(void);
 void sort(char **arr, char flag);
+void style(game_t *g, char *path, char *file);
+void without_chr(game_t *game, char **av, int i);
 
 // DRAW
 void draw_rectangle(vector2_t size, vector2_t pos, int corner_type);

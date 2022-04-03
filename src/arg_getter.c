@@ -35,17 +35,3 @@ void handle_h_str(char *src, char *str, int *key)
             *key = my_getnbr(handle_arg(src, 0, '='));
     }
 }
-
-void style(game_t *g, char *path, char *file)
-{
-    char *inside;
-    if (file_error_detection(path) == TRUE) {
-        inside = read_to_charstar(path);
-        printf("Tetriminos '");
-        printf("%s", before_point(file));
-        if (good_file(inside) == 1)
-            printf("': error\n");
-        else
-            continue_display(inside, g);
-    }
-}

@@ -22,7 +22,9 @@ int count_file(game_t *g)
         path = my_strcat("tetriminos/", file);
         if (file_error_detection(path) == TRUE)
             count++;
+        free(path);
     }
+    closedir(file_name);
     return count;
 }
 

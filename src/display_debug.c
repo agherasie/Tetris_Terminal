@@ -7,11 +7,13 @@
 
 #include "../include/tetris.h"
 
-char *before_point(char *file)
+char *before_c(char *file, char c)
 {
-    char *new_file = malloc(sizeof(char) * (30));
-    for (int i = 0; file[i] != '.'; i++)
+    char *new_file = malloc(sizeof(char) * (my_strlen(file)));
+    int i = 0;
+    for (; file[i] != c; i++)
         new_file[i] = file[i];
+    new_file[i] = '\0';
     return new_file;
 }
 
@@ -52,23 +54,20 @@ void continue_display(char *inside, game_t *g)
 
 int check_file(game_t *g)
 {
-    struct dirent *dirent;
-    DIR *file_name;
-    char *file;
-    char *path;
-    char *inside;
-    file_name = opendir("tetriminos");
-    while ((dirent = readdir(file_name)) != NULL) {
-        file = dirent->d_name;
-        path = my_strcat("tetriminos/", file);
+    char **file_names = valid_files();
+    sort(file_names, 'a');
+    for (int i = 0; file_names[i]; i++) {
+        char *path = my_strcat("tetriminos/", file_names[i]);
         if (file_error_detection(path) == TRUE) {
-            inside = read_to_charstar(path);
+            char *inside = read_to_charstar(path);
+            char *name = before_c(file_names[i], '.');
             printf("Tetriminos '");
-            printf("%s", before_point(file));
+            printf("%s", name);
             if (good_file(inside) == 1)
                 printf("': error\n");
             else
                 continue_display(inside, g);
+            free(inside);
         }
         free(path);
     }

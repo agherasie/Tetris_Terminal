@@ -84,11 +84,12 @@ void handle_h_char(char key_code, int *key, char *src, char label);
 void handle_h_str(char *src, char *str, int *key);
 void handle_d(game_t *g);
 int check_file(game_t *g);
-char *before_point(char *file);
 char *open_map(char *file);
 int my_getnbr2(char const *str);
 void continue_display(char *inside, game_t *g);
 int count_file(game_t *g);
+char **valid_files(void);
+void sort(char **arr, char flag);
 
 // DRAW
 void draw_rectangle(vector2_t size, vector2_t pos, int corner_type);

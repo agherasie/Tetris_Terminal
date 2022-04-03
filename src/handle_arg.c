@@ -53,7 +53,7 @@ void handle_h(int ac, char **av, game_t *game)
 {
     int i = 1;
     for (; i < ac; i++) {
-        if (av[i][0] == '-')
+        if (av[i][0] == '-' && av[i][1] != '-')
             without_chr(game, av, i);
         if (av[i][1] == '-')
             multiple_chr(game, av, i);

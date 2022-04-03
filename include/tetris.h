@@ -89,6 +89,8 @@ char *open_map(char *file);
 int my_getnbr2(char const *str);
 void continue_display(char *inside, game_t *g);
 int count_file(game_t *g);
+void style(game_t *g, char *path, char *file);
+void without_chr(game_t *game, char **av, int i);
 
 // DRAW
 void draw_rectangle(vector2_t size, vector2_t pos, int corner_type);

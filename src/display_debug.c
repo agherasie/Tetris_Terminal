@@ -56,20 +56,11 @@ int check_file(game_t *g)
     DIR *file_name;
     char *file;
     char *path;
-    char *inside;
     file_name = opendir("tetriminos");
     while ((dirent = readdir(file_name)) != NULL) {
         file = dirent->d_name;
         path = my_strcat("tetriminos/", file);
-        if (file_error_detection(path) == TRUE) {
-            inside = read_to_charstar(path);
-            printf("Tetriminos '");
-            printf("%s", before_point(file));
-            if (good_file(inside) == 1)
-                printf("': error\n");
-            else
-                continue_display(inside, g);
-        }
-        free(path);
+        style(g, path, file);
     }
+    free(path);
 }

@@ -7,6 +7,24 @@
 
 #include "../include/tetris.h"
 
+void set_stats(game_t *g)
+{
+    int lines = full_lines(g);
+    g->score += lines * 100 * g->level * (g->streak + 1);
+    if (lines >= 4) {
+        g->animation = 1;
+        g->score += lines * 100 * g->level;
+    }
+    g->lines += lines;
+    if (g->lines >= 10) {
+        g->level++;
+        g->lines -= 10;
+    }
+    g->streak++;
+    if (lines == 0)
+        g->streak = 0;
+}
+
 void land_tetris(game_t *g, tetriminos_t *tetris)
 {
     for (int y = 0; y < tetris->size.y; y++)
@@ -16,6 +34,7 @@ void land_tetris(game_t *g, tetriminos_t *tetris)
         }
     reset_tetris(g);
     tetris->amount += 1;
+    set_stats(g);
 }
 
 void swap_tetris(game_t *g)

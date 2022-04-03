@@ -45,11 +45,19 @@ void draw_frame(char *filepath, int number, vector2_t pos)
 
 void draw_animation(game_t *g, vector2_t off)
 {
-    if (g->animation == 0)
-        return;
     off.y += g->map_size.y + 2;
     off.x += g->map_size.x / 2;
     if (g->tetris->pos.y >= 4)
+        return;
+    if (g->streak > 1) {
+        mvprintw(off.y, off.x - 11, "WOW ! YOU'RE ON FIRE !");
+        attron(COLOR_PAIR(1));
+        for (int i = 0; i < g->streak; i++)
+            mvprintw(off.y + 1, off.x + i - g->streak / 2, "*");
+        attroff(COLOR_PAIR(1));
+        off.y += 2;
+    }
+    if (g->animation == 0)
         return;
     mvprintw(off.y, off.x + 1, "BOOM");
     for (int i = 0; i < g->tetris->pos.y; i++)

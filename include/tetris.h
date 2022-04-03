@@ -75,6 +75,7 @@ typedef struct g {
     int paused;
     int select;
     int screen;
+    int streak;
 } game_t;
 
 // PARAMS

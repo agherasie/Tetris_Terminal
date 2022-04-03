@@ -41,21 +41,6 @@ int resize_screen(game_t *g)
     return 1;
 }
 
-void set_stats(game_t *g)
-{
-    int lines = full_lines(g);
-    g->score += lines * 100 * g->level;
-    if (lines >= 4) {
-        g->animation = 1;
-        g->score += lines * 100 * g->level;
-    }
-    g->lines += lines;
-    if (g->lines >= 10) {
-        g->level++;
-        g->lines -= 10;
-    }
-}
-
 int loop(game_t *g)
 {
     if (resize_screen(g) == 0)
@@ -72,7 +57,6 @@ int loop(game_t *g)
     g->time++;
     draw_ui(g);
     movement(g);
-    set_stats(g);
     gravity(g);
     if (read_input(g) == 1)
         return 1;

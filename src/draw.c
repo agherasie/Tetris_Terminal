@@ -33,6 +33,9 @@ void draw_stats(game_t *g, vector2_t off)
     draw_hint(g, off, g->tetri[g->next]);
     mvprintw(off.y + 16, xoffset, "LEVEL");
     mvprintw(off.y + 17, xoffset, "% 5i", g->level);
+    int seconds = g->time / (20 - g->level);
+    int minutes = seconds / 60;
+    mvprintw(off.y + 19, xoffset, "TIME %.2i:%.2i", minutes, seconds % 60);
     draw_statistics(g, off);
 }
 

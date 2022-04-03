@@ -78,6 +78,7 @@ game_t *init_params(void)
     g->rotate = 0;
     g->time = 0;
     g->lines = 0;
+    g->streak = 0;
     g->score = 0;
     g->hiscore = get_hiscore();
     g->current = 0;

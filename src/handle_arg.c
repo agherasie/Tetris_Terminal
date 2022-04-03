@@ -24,7 +24,7 @@ void without_chr(game_t *game, char **av, int i)
 {
     if (av[i][1] == 'w')
         game->show_next = FALSE;
-    if (av[i][1] == 'D')
+    else if (av[i][1] == 'D')
         game->debug_mode = TRUE;
     else
         single_chr(game, av, i);

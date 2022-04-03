@@ -25,6 +25,7 @@ int starts_with(char *str1, char *str2, char end);
 int ends_with(char *str, char *ending);
 char *to_upper(char *str);
 char *to_lower(char *str);
+char *before_c(char *file, char c);
 
 // SORT
 void sort(char **arr, char flag);

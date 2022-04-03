@@ -79,12 +79,12 @@ game_t *init_params(void)
     g->time = 0;
     g->lines = 0;
     g->score = 0;
+    g->hiscore = get_hiscore();
     g->current = 0;
     g->reserve = -1;
     g->animation = 0;
     g->paused = 1;
     g->select = 0;
     g->screen = MAIN;
-    get_score(&g->hiscore);
     return g;
 }

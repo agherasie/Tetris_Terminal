@@ -24,7 +24,7 @@ int draw_screen(game_t *g, int *button_count)
         settings_menu(g);
     }
     if (g->screen == SCOREBOARD) {
-        *button_count = 1;
+        *button_count = 2;
         scoreboard(g);
     }
     return 0;

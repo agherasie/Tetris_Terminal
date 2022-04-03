@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2022
 ** tetris
 ** File description:
-**
+** arg_getter
 */
 
 #include "../include/tetris.h"

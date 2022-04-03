@@ -31,8 +31,7 @@ int emergency_exit(game_t *g, int exitcode)
     refresh();
     clear();
     endwin();
-    if (g->score > g->hiscore)
-        set_score(&g->score);
+    fill_scoreboard(g);
     free_all(g);
     exit(exitcode);
 }

@@ -41,8 +41,7 @@ int buttons(game_t *g, int input)
         return 0;
     }
     if (g->screen == SCOREBOARD) {
-        if (input == g->keys->p && g->select == 0)
-            g->screen = MAIN;
+        scoreboard_buttons(g, input);
         return 0;
     }
     if (g->screen == MAIN)

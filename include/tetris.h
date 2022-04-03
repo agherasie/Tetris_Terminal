@@ -146,8 +146,16 @@ int buttons(game_t *g, int input);
 void set_param(game_t *g, int *param, char type, int rank);
 void slider(game_t *g, int *param, vector2_t vars, vector2_t range);
 int settings_buttons(game_t *g, int input);
+int scoreboard_buttons(game_t *g, int input);
 int main_buttons(game_t *g, int input);
 int pause_buttons(game_t *g, int input);
+
+// SCOREBOARD
+void print_score(int f, char *player, int score);
+void fill_scoreboard(game_t *g);int get_hiscore(void);
+char **get_player_names(char *buff, int count);
+int *get_scores(char *buff, int count);
+int read_scoreboard(game_t *g, char ***players_ptr, int **scores_ptr);
 
 // MENUS
 int settings_menu(game_t *g);

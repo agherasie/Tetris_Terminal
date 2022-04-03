@@ -9,6 +9,8 @@
 
 void single_chr(game_t *game, char **av, int i)
 {
+    if (av[i + 1] == NULL)
+        exit(84);
     handle_h_char('l', &game->keys->l, av[i + 1], av[i][1]);
     handle_h_char('r', &game->keys->r, av[i + 1], av[i][1]);
     handle_h_char('t', &game->keys->t, av[i + 1], av[i][1]);
@@ -16,10 +18,16 @@ void single_chr(game_t *game, char **av, int i)
     handle_h_char('q', &game->keys->q, av[i + 1], av[i][1]);
     handle_h_char('p', &game->keys->p, av[i + 1], av[i][1]);
     handle_h_char('L', &game->level, av[i + 1], av[i][1]);
+}
+
+void without_chr(game_t *game, char **av, int i)
+{
     if (av[i][1] == 'w')
         game->show_next = FALSE;
     if (av[i][1] == 'D')
         game->debug_mode = TRUE;
+    else
+        single_chr(game, av, i);
 }
 
 void multiple_chr(game_t *game, char **av, int i)
@@ -46,7 +54,7 @@ void handle_h(int ac, char **av, game_t *game)
     int i = 1;
     for (; i < ac; i++) {
         if (av[i][0] == '-')
-            single_chr(game, av, i);
+            without_chr(game, av, i);
         if (av[i][1] == '-')
             multiple_chr(game, av, i);
     }

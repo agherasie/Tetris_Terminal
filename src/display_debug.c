@@ -42,12 +42,12 @@ void continue_display(char *inside, game_t *g)
     display_tetri(inside);
 }
 
-void print_file(game_t *g, char **file_names, int i)
+void print_file(game_t *g, char *file_name)
 {
-    char *path = my_strcat("tetriminos/", file_names[i]);
+    char *path = my_strcat("tetriminos/", file_name);
     if (file_error_detection(path) == TRUE) {
         char *inside = read_to_charstar(path);
-        char *name = before_c(file_names[i], '.');
+        char *name = before_c(file_name, '.');
         printf("Tetriminos '");
         printf("%s", name);
         if (good_file(inside) == 1)
@@ -55,6 +55,7 @@ void print_file(game_t *g, char **file_names, int i)
         else
             continue_display(inside, g);
         free(inside);
+        free(name);
     }
     free(path);
 }
@@ -63,6 +64,9 @@ int check_file(game_t *g)
 {
     char **file_names = valid_files();
     sort(file_names, 'a');
-    for (int i = 0; file_names[i]; i++)
-        print_file(g, file_names, i);
+    for (int i = 0; file_names[i]; i++) {
+        print_file(g, file_names[i]);
+        free(file_names[i]);
+    }
+    free(file_names);
 }

@@ -14,9 +14,11 @@ game_t *init_game(int ac, char **av)
         return NULL;
     game_t *g = init_params();
     g->map = NULL;
+    g->tetri = NULL;
     handle_h(ac, av, g);
     if (g->debug_mode == 1) {
         handle_d(g);
+        free_all(g);
         return NULL;
     }
     ncurses_init();

@@ -26,6 +26,9 @@ int ends_with(char *str, char *ending);
 char *to_upper(char *str);
 char *to_lower(char *str);
 
+// SORT
+void sort(char **arr, char flag);
+
 // FILE
 char *read_to_charstar(char *path);
 void get_score(int *hiscore);
